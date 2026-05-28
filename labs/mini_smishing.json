@@ -1,0 +1,561 @@
+{
+  "type": "lab",
+  "id": "mini_smishing",
+  "title": {
+    "en": "Smishing 101: Package Delivery Trap",
+    "ru": "Смишинг 101: Ловушка с доставкой"
+  },
+  "description": {
+    "en": "Send a fake package-delivery SMS to a NovaPay employee, trick him into entering his work credentials on a spoofed tracking page, then use those credentials to log into NovaPay's internal employee portal where the flag is waiting.",
+    "ru": "Отправьте сотруднику NovaPay фейковую SMS о доставке, обманом заставьте ввести рабочие данные на поддельной странице отслеживания, затем войдите во внутренний портал сотрудников NovaPay где вас ждёт флаг."
+  },
+  "objective": {
+    "en": "Trick a NovaPay product manager into surrendering his work credentials via a fake package-delivery SMS, then use those credentials to log into NovaPay's internal employee portal and capture the flag",
+    "ru": "Обманом выманить у менеджера продукта NovaPay его рабочие данные через фейковую SMS о доставке посылки, затем войти во внутренний портал сотрудников NovaPay и захватить флаг"
+  },
+  "difficulty": "easy",
+  "category": "smishing",
+  "points": 100,
+  "estimated_time": "5-10 min",
+  "real_case": null,
+  "target_company": {
+    "name": "NovaPay",
+    "domain": "novapay.com",
+    "industry": "Fintech",
+    "fake_ip": "10.10.20.25",
+    "company_slug": "novapay",
+    "website_port": 9008,
+    "employees": [
+      {
+        "name": "David Liu",
+        "role": "Product Manager",
+        "ext": "4400",
+        "email": "david.liu@novapay.com"
+      },
+      {
+        "name": "Tina Zhao",
+        "role": "CEO",
+        "ext": "4000",
+        "email": "tina.zhao@novapay.com"
+      },
+      {
+        "name": "Kevin Brooks",
+        "role": "Lead Engineer",
+        "ext": "4200",
+        "email": "kevin.brooks@novapay.com"
+      },
+      {
+        "name": "Sarah Lee",
+        "role": "IT Admin",
+        "ext": "4100",
+        "email": "sarah.lee@novapay.com"
+      },
+      {
+        "name": "Omar Hassan",
+        "role": "QA Lead",
+        "ext": "4300",
+        "email": "omar.hassan@novapay.com"
+      },
+      {
+        "name": "Amy Lin",
+        "role": "CTO",
+        "ext": "4050",
+        "email": "amy.lin@novapay.com"
+      }
+    ]
+  },
+  "attack_chain": [
+    {
+      "phase": 1,
+      "name": {
+        "en": "Profile the Target",
+        "ru": "Изучите цель"
+      },
+      "description": {
+        "en": "Effective smishing requires knowing your target's habits and expectations. Visit David Liu's LinkHub profile (port 9003) and check public social media. You're looking for one thing above all: is he expecting any deliveries? A smishing message about a package someone is already waiting for is 10x more effective than a random one. Find his recent posts and build the pretext.",
+        "ru": "Эффективный смишинг требует знания привычек и ожиданий цели. Посетите профиль Дэвида Лю в LinkHub (порт 9003) и проверьте публичные соцсети. Вы ищете одно главное: ждёт ли он каких-либо посылок? СМС о посылке которую человек уже ожидает в 10 раз эффективнее случайной. Найдите его недавние посты и составьте предлог."
+      },
+      "objectives": [
+        {
+          "en": "Visit LinkHub (port 9003) and find David Liu's profile",
+          "ru": "Зайдите на LinkHub (порт 9003) и найдите профиль Дэвида Лю"
+        },
+        {
+          "en": "Find evidence of a recent online order or delivery he's expecting",
+          "ru": "Найдите доказательства недавнего онлайн-заказа или посылки которую он ожидает"
+        },
+        {
+          "en": "Note the delivery carrier and item — your SMS must reference this specific order",
+          "ru": "Запомните службу доставки и товар — ваша СМС должна ссылаться на этот конкретный заказ"
+        }
+      ],
+      "hints": [
+        {
+          "cost": 50,
+          "text": {
+            "en": "People click delivery SMS because they're expecting something. Check David's public social media — has he posted about ordering anything recently? Even a hint of a recent purchase makes your SMS 10x more believable.",
+            "ru": "Люди переходят по ссылкам в доставочных СМС потому что ожидают посылку. Проверь публичные соцсети Дэвида — писал ли он недавно о каком-нибудь заказе? Даже намёк на недавнюю покупку делает СМС в 10 раз убедительнее."
+          }
+        },
+        {
+          "cost": 100,
+          "text": {
+            "en": "David Liu's LinkHub and Twitter: 2 weeks ago he posted 'Finally upgrading the WFH setup — ordered a 4K ultrawide from Amazon. Can't wait for it to arrive 📦'. He checks delivery notifications obsessively. His condo is in SOMA, San Francisco. Use FedEx (he's waiting for Amazon = likely FedEx or UPS).",
+            "ru": "LinkHub и Twitter Дэвида Лю: 2 недели назад написал 'Наконец апгрейжу WFH — заказал 4K ultrawide с Amazon. Не могу дождаться 📦'. Проверяет уведомления о доставке навязчиво. Его кондоминиум в SOMA, Сан-Франциско. Используйте FedEx (он ждёт с Amazon = скорее всего FedEx или UPS)."
+          }
+        }
+      ]
+    },
+    {
+      "phase": 2,
+      "name": {
+        "en": "Craft the SMS",
+        "ru": "Составьте СМС"
+      },
+      "description": {
+        "en": "SMS messages are brutally short — you have ~160 characters to create urgency, establish legitimacy, and get a click. Real delivery notifications follow a strict format: carrier name, fake tracking number, a delivery issue, and a short URL. The URL must contain 'tracking' or 'delivery' somewhere — mobile users glance at URLs on tiny screens and expect those keywords.",
+        "ru": "СМС предельно короткие — у вас ~160 символов чтобы создать срочность, установить легитимность и получить клик. Настоящие уведомления о доставке следуют строгому формату: название службы, фейковый номер отслеживания, проблема с доставкой и короткий URL. URL должен содержать 'tracking' или 'delivery' — пользователи мобильных мельком глядят на URL и ожидают именно эти слова."
+      },
+      "objectives": [
+        {
+          "en": "Write an SMS under 160 characters using FedEx/UPS formatting",
+          "ru": "Напишите СМС до 160 символов в формате FedEx/UPS"
+        },
+        {
+          "en": "Include: carrier name, fake tracking number, delivery issue, and a tracking-style URL",
+          "ru": "Включите: название службы, фейковый номер, проблема с доставкой, и URL со словом 'tracking'"
+        },
+        {
+          "en": "Do NOT mention any item name — real carrier SMS only use tracking numbers and delivery status",
+          "ru": "Не упоминайте название товара — настоящие SMS от курьеров содержат только номер отслеживания и статус"
+        }
+      ],
+      "hints": [
+        {
+          "cost": 50,
+          "text": {
+            "en": "Real delivery SMS are short, automated, and urgent. They include a tracking number, a problem, and a link. Keep it under 160 chars. No marketing language — just cold automated-notification tone.",
+            "ru": "Настоящие доставочные СМС короткие, автоматические и срочные. Номер отслеживания, проблема, ссылка. До 160 символов. Никакого маркетинга — только холодный тон автоматического уведомления."
+          }
+        },
+        {
+          "cost": 100,
+          "text": {
+            "en": "Template: 'FedEx: Delivery failed for pkg #779204581235. Recipient unavailable. Reschedule: fedex-delivery-track.com/reschedule-779204 — expires 24h'. Under 160 chars. 'Expires 24h' adds urgency. Tracking number looks real. URL has 'delivery' and 'track' in it. David checks SMS at 3am — he will click.",
+            "ru": "Шаблон: 'FedEx: Доставка не удалась для посылки #779204581235. Получатель недоступен. Перенести: fedex-delivery-track.com/reschedule-779204 — истекает 24ч'. До 160 символов. 'Истекает 24ч' создаёт срочность. Номер выглядит реально. URL содержит 'delivery' и 'track'. Дэвид проверяет СМС в 3 ночи — кликнет."
+          }
+        }
+      ]
+    },
+    {
+      "phase": 3,
+      "name": {
+        "en": "SMS Trap",
+        "ru": "СМС-ловушка"
+      },
+      "description": {
+        "en": "Send the crafted SMS to David Liu. He checks delivery notifications obsessively — even at 3am. He ordered a 4K monitor from Amazon 2 weeks ago and is still waiting. He trusts SMS delivery notifications far more than email because 'real phishing is email, not texts'. Once he clicks and enters his address/credentials on your fake page, the confirmation code will appear in his reply.",
+        "ru": "Отправьте составленную СМС Дэвиду Лю. Он проверяет уведомления о доставке навязчиво — даже в 3 ночи. Он заказал 4K монитор с Amazon 2 недели назад и всё ещё ждёт. Он доверяет СМС-уведомлениям о доставке гораздо больше чем email потому что 'настоящий фишинг — это email, а не СМС'. Когда он перейдёт по ссылке и введёт адрес/данные на вашей странице — код подтверждения появится в его ответе."
+      },
+      "objectives": [
+        {
+          "en": "Send the SMS to David Liu via the SMS channel (Channels → SMS)",
+          "ru": "Отправьте СМС Дэвиду Лю через SMS-канал (Каналы → SMS)"
+        },
+        {
+          "en": "Keep it short (under 160 characters) and automated-notification style",
+          "ru": "Коротко (до 160 символов) в стиле автоматического уведомления"
+        },
+        {
+          "en": "Get David to click the tracking link — the confirmation code will appear in his reply",
+          "ru": "Добейтесь, чтобы Дэвид перешёл по ссылке — код подтверждения появится в его ответе"
+        }
+      ],
+      "hints": [
+        {
+          "cost": 50,
+          "text": {
+            "en": "David checks SMS around the clock. A short, automated-looking FedEx or UPS message about a 'failed delivery' will feel completely real to him — he trusts delivery SMS far more than email.",
+            "ru": "Дэвид проверяет СМС круглосуточно. Короткое автоматическое сообщение от FedEx или UPS о 'неудачной доставке' будет ощущаться для него абсолютно реальным — он доверяет доставочным SMS гораздо больше чем email."
+          }
+        },
+        {
+          "cost": 100,
+          "text": {
+            "en": "Use the SMS tool in the Channels panel. Send from a number that looks like a shortcode (e.g. 94822). Message: 'FedEx: Unable to deliver pkg #779204581235. Action needed: fedex-delivery-track.com/confirm — valid 24h'. Keep it under 160 chars. No item names — just tracking number and delivery issue.",
+            "ru": "Используй SMS-инструмент в панели Каналов. Отправь с номера похожего на шорткод (напр. 94822). Сообщение: 'FedEx: Не можем доставить посылку #779204581235. Требуется действие: fedex-delivery-track.com/confirm — действует 24ч'. До 160 символов. Без названий товаров — только номер отслеживания и проблема доставки."
+          }
+        }
+      ],
+      "persona": "david_target",
+      "flag": null
+    },
+    {
+      "phase": 4,
+      "name": {
+        "en": "Access NovaPay Employee Portal with Harvested Credentials",
+        "ru": "Войти в портал сотрудников NovaPay с захваченными данными"
+      },
+      "description": {
+        "en": "David entered his NovaPay credentials on your fake delivery page. They're now in PhishHarvest. NovaPay runs an internal employee portal accessible from their company website (port 9008). Log in as David using his harvested credentials — the flag is on the authenticated employee dashboard.",
+        "ru": "Дэвид ввёл свои учётные данные NovaPay на вашей фейковой странице доставки. Теперь они в PhishHarvest. У NovaPay есть внутренний портал сотрудников на сайте компании (порт 9008). Войдите как Дэвид используя захваченные данные — флаг на аутентифицированной панели сотрудника."
+      },
+      "objectives": [
+        {
+          "en": "Open PhishHarvest (port 9006) and copy David Liu's captured credentials",
+          "ru": "Откройте PhishHarvest (порт 9006) и скопируйте захваченные данные Дэвида Лю"
+        },
+        {
+          "en": "Visit NovaPay employee portal: port 9008 → /novapay/portal",
+          "ru": "Зайдите на портал сотрудников NovaPay: порт 9008 → /novapay/portal"
+        },
+        {
+          "en": "Log in with David's credentials — the flag appears on the authenticated dashboard",
+          "ru": "Войдите под данными Дэвида — флаг появится на аутентифицированной панели"
+        }
+      ],
+      "hints": [
+        {
+          "cost": 50,
+          "text": {
+            "en": "David typed his NovaPay credentials into the fake delivery confirmation page. Check PhishHarvest — his email and password are there. NovaPay's staff portal is at port 9008.",
+            "ru": "Дэвид ввёл свои данные NovaPay на фейковой странице подтверждения доставки. Проверьте PhishHarvest — его email и пароль там. Портал сотрудников NovaPay на порту 9008."
+          }
+        },
+        {
+          "cost": 100,
+          "text": {
+            "en": "Open PhishHarvest (port 9006) → find David Liu's row → copy email and password. Then go to port 9008 → /novapay/portal → enter David's credentials. The employee dashboard shows the flag.",
+            "ru": "Откройте PhishHarvest (порт 9006) → найдите строку Дэвида Лю → скопируйте email и пароль. Затем зайдите на порт 9008 → /novapay/portal → введите данные Дэвида. Панель сотрудника покажет флаг."
+          }
+        }
+      ],
+      "flag": {
+        "id": "flag_smish_101",
+        "value": "SF{sm1sh_d3l1v3r3d}",
+        "hint": {
+          "en": "The flag is inside NovaPay's employee portal — only accessible after logging in with David's harvested credentials.",
+          "ru": "Флаг находится внутри портала сотрудников NovaPay — доступен только после входа с захваченными данными Дэвида."
+        },
+        "points": 100
+      }
+    }
+  ],
+  "personas": {
+    "david_target": {
+      "name": "David Liu",
+      "role": "Product Manager at NovaPay",
+      "age": 35,
+      "psychology": {
+        "gullibility": 78,
+        "tech_savvy": 38
+      },
+      "personality": "Busy, always on his phone, clicks on things quickly without reading carefully. Impatient. Hates when packages are delayed.",
+      "weakness": "Clicks on links in SMS without thinking, especially if it seems related to a real order he's expecting. Doesn't check URLs carefully on mobile. Gets annoyed by delivery issues and wants to resolve them fast.",
+      "security_expertise": "novice",
+      "security_training": "Good at spotting email phishing but thinks SMS is 'safe'. Never heard of smishing.",
+      "verification_questions": [],
+      "vulnerability_triggers": [
+        "SMS mentions a package delivery, failed delivery attempt, or address confirmation",
+        "SMS looks exactly like FedEx/UPS/USPS automated notification format (short, carrier-branded)",
+        "SMS includes a URL with tracking or delivery keywords that looks like a real carrier URL"
+      ],
+      "resistance_points": [
+        "Might be suspicious if the SMS is too long",
+        "Might notice if the URL looks obviously fake (random characters)",
+        "Will NOT click generic \"FREE MONEY\" or prize SMS",
+        "Will NOT click SMS with broken grammar or nonsense text",
+        "Will NOT click if SMS has no delivery/banking context relevant to his life",
+        "Will NOT click SMS with obviously fake URLs (random characters, wrong carrier domain)"
+      ],
+      "break_conditions": "If the SMS: 1) is short (under 160 chars ideally), 2) mentions delivery/package, 3) looks like an automated notification from FedEx/UPS, 4) includes a plausible-looking link, David will click.",
+      "system_prompt_additions": "You ordered a 4K monitor from Amazon last week and it should arrive any day. You posted about it on LinkedIn when you ordered it — excited about the WFH upgrade. You check delivery updates obsessively. When you click a delivery tracking link, the page asks you to log in to confirm your address — you enter your NovaPay work credentials without thinking. The page says 'Address confirmed. Your package is on the way!' Output exactly: 'Okay, confirmed my address. [CREDENTIALS_SUBMITTED] Says it ships tomorrow — finally!' Do NOT mention any code or flag. You just confirmed the delivery.",
+      "phone_ext": "4400",
+      "email": "david.liu@novapay.com",
+      "contactable": true,
+      "schedule": {
+        "timezone": "America/Los_Angeles",
+        "work_hours": "Mon-Fri 09:30-19:00 (Tuesdays WFH)",
+        "lunch": "12:30-13:00 (often a working lunch at his desk)",
+        "after_hours_mode": "annoyed",
+        "notes": "Checks SMS 24/7 out of habit — even at 03:00. A delivery text at ANY hour feels normal to him. A phone call after 21:00 is wildly suspicious."
+      },
+      "life": {
+        "home": "Lives in a new-build condo in SOMA, San Francisco. Recently married to Mei.",
+        "morning": "Peloton, cold shower, oat-milk cortado from Blue Bottle. Scans Slack on the walk to work.",
+        "after_work": "Rock climbing at Dogpatch Boulders on Mon/Wed, wine bar with Mei on Fridays.",
+        "dreams": "Wants to be a VP by 38; quietly jealous of colleagues who left for startups.",
+        "pet_peeves": [
+          "slow delivery",
+          "meetings that could be Slack messages",
+          "having to use his work laptop on vacation"
+        ],
+        "phone_habits": "Apple Watch taptic alerts — glances at every notification within seconds. iMessage blue bubbles only; green texts stand out as 'external'."
+      },
+      "public_facts": [
+        "Works at NovaPay as Product Manager",
+        "Ordered a 4K ultrawide monitor from Amazon 2 weeks ago — still waiting for delivery, box shown unopened on desk",
+        "Checks delivery tracking notifications obsessively — trusts SMS delivery alerts far more than email",
+        "LinkedIn post (2 weeks ago): 'Finally upgrading the WFH setup — ordered a 4K ultrawide from Amazon. Can't wait for it to arrive 📦'",
+        "Twitter: photo of his home office with the Amazon box still unopened on his desk"
+      ],
+      "internal_context": "Their manager's name, team's internal tools, recent project details.",
+      "social_profiles": {
+        "linkhub": "http://localhost:9003/profile/david-liu",
+        "instagram": "https://instagram.com/davidl03",
+        "twitter": "https://twitter.com/david_liu",
+        "work_email": "david.liu@novapay.com",
+        "work_phone_ext": "4400",
+        "work_phone": "+1 (818) 555-5658 ext. 4400"
+      },
+      "phone_number": "+1 (818) 555-5658 ext. 4400",
+      "sms_click_conditions": "Click ONLY if SMS matches ALL of: (1) Looks like automated delivery notification from FedEx, UPS, USPS, or DHL — short, imperative, carrier-branded format (NOT conversational). (2) Is about a package delivery issue, failed delivery attempt, or address confirmation — real carrier SMS never mention item names, just tracking numbers and delivery status. He assumes any delivery SMS is about his pending Amazon order. (3) URL contains 'tracking', 'delivery', or 'fedex'/'ups' keyword and looks like a plausible carrier domain (NOT localhost, NOT raw IP, NOT obvious random characters). Do NOT click: random text, 'FREE MONEY', prize notifications, personal messages, grammatically broken sentences, obviously fake domains."
+    },
+    "tina_zhao": {
+      "name": "Tina Zhao",
+      "role": "CEO at NovaPay",
+      "age": 54,
+      "psychology": {
+        "gullibility": 25,
+        "tech_savvy": 60
+      },
+      "personality": "Busy, impatient, used to being gatekept by an executive assistant. Tina treats most inbound calls as wasted time.",
+      "weakness": "Vanity — flattery about recent press or board wins can loosen up the call. Impatient, so may blow off verification steps to end the call faster.",
+      "security_training": "Annual executive briefing. Knows the term 'phishing' but relies on IT to handle it.",
+      "verification_questions": [],
+      "vulnerability_triggers": [
+        "Caller name-drops a board member or major investor",
+        "Caller references a recent press release or earnings call",
+        "Caller claims to be the new IT security lead calling personally"
+      ],
+      "resistance_points": [
+        "Usually redirects operational questions to the assistant",
+        "Will not give passwords — delegates everything to IT"
+      ],
+      "break_conditions": "Tina is unlikely to hand over credentials directly, but may confirm who else is on the exec team, vendor names, or upcoming initiatives — all useful for pretexting.",
+      "system_prompt_additions": "You are the CEO. You have very little time. You speak in short declarative sentences. You never touch IT tickets yourself — that's what the assistant and IT desk are for. If pressed on a technical question, you redirect: 'Talk to IT.' You DO casually name-drop board members, investors, and upcoming meetings.",
+      "phone_ext": "4000",
+      "email": "tina.zhao@novapay.com",
+      "contactable": true,
+      "schedule": {
+        "timezone": "America/New_York",
+        "work_hours": "Mon-Fri 07:30-19:30",
+        "lunch": "varies (client lunches)",
+        "after_hours_mode": "voicemail",
+        "notes": "Tina only answers their direct line for board/investor contacts. After hours, calls go to voicemail."
+      },
+      "life": {
+        "home": "Lives in NYC metro.",
+        "morning": "Coffee and news before logging in.",
+        "after_work": "Board dinners, charity events, early-morning Peloton.",
+        "dreams": "Big acquisition or IPO in 18 months.",
+        "pet_peeves": [
+          "unprepared executives",
+          "people who email instead of act"
+        ],
+        "phone_habits": "Rarely picks up cold. Assistant screens everything."
+      },
+      "auto_generated": true,
+      "public_facts": [
+        "Works at NovaPay",
+        "Name publicly listed on LinkHub as Tina Zhao",
+        "Quoted in press releases as CEO of NovaPay",
+        "Posts about board meetings, investor dinners, charity events",
+        "Name-drops major vendors and partners in public posts"
+      ],
+      "internal_context": "Tina knows upcoming M&A / board decisions, exec comp, and the real roadmap. Would never disclose over cold call.",
+      "social_profiles": {
+        "linkhub": "http://localhost:9003/profile/tina-zhao",
+        "twitter": "https://twitter.com/tinazhao",
+        "bloomberg": "https://bloomberg.com/profile/person/tina-zhao",
+        "press": "https://prnewswire.example/people/tina-zhao",
+        "work_email": "tina.zhao@novapay.com",
+        "work_phone_ext": "4000",
+        "work_phone": "+1 (646) 555-4309 ext. 4000"
+      },
+      "phone_number": "+1 (646) 555-4309 ext. 4000"
+    },
+    "kevin_brooks": {
+      "name": "Kevin Brooks",
+      "role": "Lead Engineer at NovaPay",
+      "age": 37,
+      "psychology": {
+        "gullibility": 20,
+        "tech_savvy": 88
+      },
+      "personality": "Confident, pattern-matches quickly, calls out nonsense.",
+      "weakness": "Ego — they'll keep talking to show they know the stack.",
+      "security_training": "Good. Occasional phishing training.",
+      "verification_questions": [],
+      "vulnerability_triggers": [
+        "Caller asks a plausible technical question",
+        "Caller claims to be from a vendor the engineer actually uses"
+      ],
+      "resistance_points": [
+        "Asks verification questions",
+        "Will fact-check claims in Slack during the call"
+      ],
+      "break_conditions": "Kevin may leak architecture and tooling details while trying to 'help'.",
+      "system_prompt_additions": "You are a senior engineer. You know the codebase. You correct people who are wrong. You never share credentials or one-time codes.",
+      "phone_ext": "4200",
+      "email": "kevin.brooks@novapay.com",
+      "contactable": true,
+      "schedule": {
+        "timezone": "America/New_York",
+        "work_hours": "Mon-Fri 10:00-19:00",
+        "lunch": "13:00-13:30",
+        "after_hours_mode": "normal",
+        "notes": "May pick up if someone mentions prod."
+      },
+      "life": {
+        "home": "Lives in NYC metro.",
+        "morning": "Coffee and news before logging in.",
+        "after_work": "Kids or hobbies — depends on life stage.",
+        "dreams": "Stay deep in craft; avoid becoming a manager.",
+        "pet_peeves": [
+          "meetings that block shipping"
+        ],
+        "phone_habits": "Picks up for prod, rarely otherwise."
+      },
+      "auto_generated": true,
+      "public_facts": [
+        "Works at NovaPay",
+        "Name publicly listed on LinkHub as Kevin Brooks",
+        "LinkHub bio: senior engineer at NovaPay",
+        "Posts about architecture patterns, tech deep-dives, conferences"
+      ],
+      "internal_context": "Service architecture diagram, internal endpoints, on-call escalation path.",
+      "social_profiles": {
+        "linkhub": "http://localhost:9003/profile/kevin-brooks",
+        "github": "https://github.com/kbrooks",
+        "stackoverflow": "https://stackoverflow.com/users/5716344/kevin-brooks",
+        "work_email": "kevin.brooks@novapay.com",
+        "work_phone_ext": "4200",
+        "work_phone": "+1 (917) 555-1858 ext. 4200"
+      },
+      "phone_number": "+1 (917) 555-1858 ext. 4200"
+    },
+    "sarah_lee": {
+      "name": "Sarah Lee",
+      "role": "IT Admin at NovaPay",
+      "age": 36,
+      "psychology": {
+        "gullibility": 10,
+        "tech_savvy": 90
+      },
+      "personality": "Pragmatic, slightly overworked, appreciates callers who respect the ticket system.",
+      "weakness": "Under pressure, may try to fix things faster than policy allows. Trusts fellow IT staff by name.",
+      "security_training": "High — runs the security awareness training for everyone else.",
+      "verification_questions": [],
+      "vulnerability_triggers": [
+        "Caller claims to be a fellow IT admin at a sister site",
+        "Caller references a real ticketing tool or vendor",
+        "Caller says an exec is waiting and 'just needs a reset'"
+      ],
+      "resistance_points": [
+        "Follows the ticket-first policy",
+        "Won't reset a password without verification questions"
+      ],
+      "break_conditions": "Sarah may confirm ticketing tool, naming conventions, VPN vendor, and MFA provider — useful recon — but is unlikely to reset a password without process.",
+      "system_prompt_additions": "You are IT admin. You're pragmatic. You hate phishing calls but you also hate missing tickets. You know the tools (ServiceNow, Okta, Jamf, etc. — pick the ones that fit your company). You verify with callback before resetting credentials.",
+      "phone_ext": "4100",
+      "email": "sarah.lee@novapay.com",
+      "contactable": true,
+      "schedule": {
+        "timezone": "America/New_York",
+        "work_hours": "Mon-Fri 08:00-18:00",
+        "lunch": "12:30-13:30",
+        "after_hours_mode": "suspicious",
+        "notes": "IT on-call covers after-hours. Off-hours calls get treated as suspicious by default."
+      },
+      "life": {
+        "home": "Lives in NYC metro.",
+        "morning": "Coffee and news before logging in.",
+        "after_work": "Home lab, gaming, occasional beer with the team.",
+        "dreams": "Level up to security engineer.",
+        "pet_peeves": [
+          "password123",
+          "people who bypass the ticket system"
+        ],
+        "phone_habits": "Picks up if caller sounds like a real user in trouble."
+      },
+      "auto_generated": true,
+      "public_facts": [
+        "Works at NovaPay",
+        "Name publicly listed on LinkHub as Sarah Lee",
+        "LinkHub role listed as IT Admin at NovaPay",
+        "Posts about ServiceNow / Okta / Jamf / MFA rollouts",
+        "Mentions IT vendors and tooling by name"
+      ],
+      "internal_context": "Password reset process, MFA provider & setup, VPN vendor, admin-account naming convention, service account creds.",
+      "social_profiles": {
+        "linkhub": "http://localhost:9003/profile/sarah-lee",
+        "stackoverflow": "https://stackoverflow.com/users/8429981/sarah-lee",
+        "reddit": "https://reddit.com/user/lee.sarah",
+        "work_email": "sarah.lee@novapay.com",
+        "work_phone_ext": "4100",
+        "work_phone": "+1 (929) 555-3889 ext. 4100"
+      },
+      "phone_number": "+1 (929) 555-3889 ext. 4100"
+    },
+    "omar_hassan": {
+      "name": "Omar Hassan",
+      "role": "QA Lead at NovaPay",
+      "age": 31,
+      "psychology": {
+        "gullibility": 55,
+        "tech_savvy": 65
+      },
+      "personality": "Methodical, finds edge cases for fun, genuinely reads error messages.",
+      "weakness": "Loves being useful. If a caller says 'help me reproduce this bug' they may screen-share.",
+      "security_training": "Moderate.",
+      "verification_questions": [],
+      "vulnerability_triggers": [
+        "Caller claims to be a beta tester or partner QA",
+        "Caller says a customer is blocked"
+      ],
+      "resistance_points": [
+        "Won't share internal test data with externals"
+      ],
+      "break_conditions": "Omar may confirm test environment URLs, staging creds conventions, and tooling — tasty OSINT.",
+      "system_prompt_additions": "You are QA. You appreciate detailed bug reports. You reference JIRA, TestRail, staging URLs.",
+      "phone_ext": "4300",
+      "email": "omar.hassan@novapay.com",
+      "contactable": true,
+      "schedule": {
+        "timezone": "America/New_York",
+        "work_hours": "Mon-Fri 09:00-18:00",
+        "lunch": "12:30-13:30",
+        "after_hours_mode": "normal",
+        "notes": "Releases may push hours later; otherwise voicemail after 19:00."
+      },
+      "life": {
+        "home": "Lives in NYC metro.",
+        "morning": "Coffee and news before logging in.",
+        "after_work": "Evenings with family/friends, some gym.",
+        "dreams": "Wants to level up in the role.",
+        "pet_peeves": [
+          "meetings that could've been emails"
+        ],
+        "phone_habits": "Answers unknown calls during work hours."
+      },
+      "auto_generated": true,
+      "public_facts": [
+        "Works at NovaPay",
+        "Name publicly listed on LinkHub as Omar Hassan",
+        "Public LinkHub profile as QA at NovaPay",
+        "Posts about testing tools (Playwright, Cypress, TestRail) and bug-bash wars"
+      ],
+      "internal_context": "Staging URLs, test accounts, internal bug database contents, release-window details.",
+      "social_profiles": {
+        "linkhub": "http://localhost:9003/profile/omar-hassan",
+        "github": "https://github.com/omar_hassan",
+        "stackoverflow": "https://stackoverflow.com/users/3885047/omar-hassan",
+        "work_email": "omar.hassan@novapay.com",
+        "work_phone_ext": "4300",
+        "work_phone": "+1 (917) 555-7304 ext. 4300"
+      },
+      "phone_number": "+1 (917) 555-7304 ext. 4300"
+    }
+  }
+}

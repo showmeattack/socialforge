@@ -1,0 +1,549 @@
+{
+  "type": "lab",
+  "id": "mini_quid_pro_quo",
+  "title": {
+    "en": "Quid Pro Quo Phishing: Free Security Scan",
+    "ru": "Услуга за услугу (фишинг): Бесплатная проверка безопасности"
+  },
+  "description": {
+    "en": "Classic quid-pro-quo attack delivered by email. Send a 'Free Microsoft Security Scan' offer to a non-technical teacher, harvest her school credentials when she clicks through, then use those credentials to log into BrightPath's internal staff portal where the flag is waiting.",
+    "ru": "Классическая атака 'услуга за услугу' через email. Отправьте учительнице письмо с предложением 'бесплатной проверки безопасности Microsoft', захватите её школьные данные, затем войдите в портал персонала BrightPath где вас ждёт флаг."
+  },
+  "objective": {
+    "en": "Trick a non-technical teacher into handing over her Microsoft 365 credentials via a fake 'free security scan' email, then use those credentials to log into BrightPath's staff portal and capture the flag",
+    "ru": "Обманом выманить у учительницы учётные данные Microsoft 365 через письмо с предложением 'бесплатной проверки безопасности', затем войти в портал персонала BrightPath и захватить флаг"
+  },
+  "difficulty": "easy",
+  "category": "phishing",
+  "points": 100,
+  "estimated_time": "10-15 min",
+  "real_case": null,
+  "target_company": {
+    "name": "BrightPath Education",
+    "domain": "brightpath.com",
+    "industry": "Education / EdTech",
+    "fake_ip": "10.10.20.30",
+    "company_slug": "brightpath",
+    "website_port": 9008,
+    "employees": [
+      {
+        "name": "Sandra Williams",
+        "role": "English Teacher",
+        "ext": "6010",
+        "email": "sandra.williams@brightpath.com"
+      },
+      {
+        "name": "Principal Margaret Hayes",
+        "role": "School Principal",
+        "ext": "6000",
+        "email": "margaret.hayes@brightpath.com"
+      },
+      {
+        "name": "John Carter",
+        "role": "IT Administrator",
+        "ext": "6050",
+        "email": "john.carter@brightpath.com"
+      },
+      {
+        "name": "Dr. Emily Foster",
+        "role": "Science Teacher",
+        "ext": "6020",
+        "email": "emily.foster@brightpath.com"
+      },
+      {
+        "name": "Carlos Rivera",
+        "role": "Math Teacher",
+        "ext": "6030",
+        "email": "carlos.rivera@brightpath.com"
+      }
+    ]
+  },
+  "attack_chain": [
+    {
+      "phase": 1,
+      "name": {
+        "en": "Pick Your Target",
+        "ru": "Выберите цель"
+      },
+      "description": {
+        "en": "Before sending anything, you need to select the right victim. Not all employees are equally vulnerable — targeting the wrong person (say, the IT admin) will get your attack flagged immediately. Visit the BrightPath Education website (port 9008) and scan the staff directory. Your ideal target is someone with low tech-literacy who trusts official-looking emails.",
+        "ru": "Прежде чем что-то отправлять, нужно выбрать правильную жертву. Не все сотрудники одинаково уязвимы — атака на не ту цель (например IT-администратора) немедленно засветит вас. Посетите сайт BrightPath Education (порт 9008) и изучите каталог сотрудников. Идеальная цель — человек с низкой технической грамотностью, доверяющий официальным письмам."
+      },
+      "objectives": [
+        {
+          "en": "Visit BrightPath Education website (port 9008) and check the staff directory",
+          "ru": "Зайдите на сайт BrightPath Education (порт 9008) и просмотрите список сотрудников"
+        },
+        {
+          "en": "Identify who is the LEAST tech-savvy employee (avoid IT staff)",
+          "ru": "Определите наименее технически грамотного сотрудника (избегайте IT-персонала)"
+        },
+        {
+          "en": "Note the IT admin's name — never target them, they will instantly detect the scam",
+          "ru": "Запомните имя IT-администратора — никогда не атакуйте его, он мгновенно распознает мошенничество"
+        }
+      ],
+      "hints": [
+        {
+          "cost": 50,
+          "text": {
+            "en": "The best phishing targets are trusting, non-technical, and worried about making mistakes with their computer. A teacher, not a sysadmin.",
+            "ru": "Лучшие цели для фишинга — доверчивые, нетехнические люди, которые боятся ошибок с компьютером. Учитель, а не сисадмин."
+          }
+        },
+        {
+          "cost": 100,
+          "text": {
+            "en": "On the BrightPath site: John Carter is the IT Admin (ext 6050) — he will immediately recognize and report a fake Microsoft email. Sandra Williams (English Teacher, ext 6010) has no IT background and trusts any email that looks professional. Target Sandra, never John.",
+            "ru": "На сайте BrightPath: Джон Картер — IT-администратор (доб. 6050) — он мгновенно распознает и сообщит о поддельном письме Microsoft. Сандра Уильямс (учительница английского, доб. 6010) не имеет IT-опыта и доверяет любому профессиональному письму. Атакуйте Сандру, но не Джона."
+          }
+        }
+      ]
+    },
+    {
+      "phase": 2,
+      "name": {
+        "en": "Build the Phishing Page",
+        "ru": "Создайте фишинговую страницу"
+      },
+      "description": {
+        "en": "Sandra will only click if the page looks genuinely like Microsoft. Open Phishing Studio (port 9006) and build a convincing Microsoft 365 login clone. Choose the right template, pick a domain that looks official but isn't microsoft.com (spam filters catch the real domain), and craft a headline that screams 'this is official'. The quality score determines how many non-technical users will fall for it.",
+        "ru": "Сандра кликнет только если страница выглядит как настоящий Microsoft. Откройте Phishing Studio (порт 9006) и создайте убедительный клон входа в Microsoft 365. Выберите подходящий шаблон, придумайте домен похожий на официальный (но не microsoft.com — спам-фильтры ловят реальный домен), составьте заголовок который кричит 'это официально'. Показатель качества определяет сколько нетехнических пользователей попадутся."
+      },
+      "objectives": [
+        {
+          "en": "Open Phishing Studio (port 9006) and select the Microsoft 365 template",
+          "ru": "Откройте Phishing Studio (порт 9006) и выберите шаблон Microsoft 365"
+        },
+        {
+          "en": "Pick a convincing lookalike domain (e.g. ms-safetycenter.com, microsoft365-edu.net)",
+          "ru": "Выберите убедительный домен-двойник (например ms-safetycenter.com, microsoft365-edu.net)"
+        },
+        {
+          "en": "Achieve a quality score above 70% for maximum effect on non-technical targets",
+          "ru": "Достигните показателя качества выше 70% для максимального эффекта на нетехнические цели"
+        }
+      ],
+      "hints": [
+        {
+          "cost": 50,
+          "text": {
+            "en": "Sandra can't tell micr0soft from microsoft. But she CAN tell if the page looks sloppy. Build a polished Microsoft 365 clone in the Phishing Studio — template, domain, quality score all matter.",
+            "ru": "Сандра не отличит micr0soft от microsoft. Но она заметит если страница выглядит небрежно. Создай отполированный клон Microsoft 365 в Phishing Studio — шаблон, домен, показатель качества — всё важно."
+          }
+        },
+        {
+          "cost": 100,
+          "text": {
+            "en": "In Phishing Studio (port 9006): choose template 'Microsoft 365 for Education'. Domain: 'microsoft-edu-security.net' or 'ms-365-safetycenter.com'. Headline: 'Account Security Verification Required'. Body: 'Your BrightPath Education Microsoft 365 account needs verification.' Copy the phishing URL — you'll need it in step 3.",
+            "ru": "В Phishing Studio (порт 9006): шаблон 'Microsoft 365 for Education'. Домен: 'microsoft-edu-security.net' или 'ms-365-safetycenter.com'. Заголовок: 'Требуется проверка безопасности аккаунта'. Текст: 'Ваш аккаунт Microsoft 365 BrightPath Education требует проверки.' Скопируй URL фишинга — понадобится на шаге 3."
+          }
+        }
+      ]
+    },
+    {
+      "phase": 3,
+      "name": {
+        "en": "The Free Security Scan",
+        "ru": "Бесплатная проверка безопасности"
+      },
+      "description": {
+        "en": "Now send the quid-pro-quo email to Sandra Williams (ext 6010). From a Microsoft-lookalike domain, claim a 'free end-of-year security check-up' for her Microsoft 365 school account — nothing to install, just click the button to 'confirm everything is fine'. Frame it as a gift, not a demand. Once she enters her credentials on your page and replies confirming the scan, you have the flag.",
+        "ru": "Теперь отправьте письмо по принципу 'услуга за услугу' Сандре Уильямс (доб. 6010). С домена-двойника Microsoft объявите 'бесплатную проверку безопасности к концу учебного года' её школьного аккаунта — ничего устанавливать не нужно, просто нажать кнопку 'подтвердить'. Подайте как подарок, а не требование. Когда она введёт данные на вашей странице и подтвердит проверку — флаг ваш."
+      },
+      "objectives": [
+        {
+          "en": "Send the quid-pro-quo email to Sandra Williams from a Microsoft-lookalike domain",
+          "ru": "Отправьте письмо quid-pro-quo Сандре Уильямс с домена-двойника Microsoft"
+        },
+        {
+          "en": "Frame it as a FREE unsolicited favor — 'we're doing this for you at no cost'",
+          "ru": "Подайте как БЕСПЛАТНУЮ незапрошенную услугу — 'мы делаем это для вас бесплатно'"
+        },
+        {
+          "en": "Get Sandra to click the link and 'complete the scan' (enter credentials on your page)",
+          "ru": "Заставьте Сандру перейти по ссылке и 'завершить проверку' (ввести данные на вашей странице)"
+        }
+      ],
+      "hints": [
+        {
+          "cost": 50,
+          "text": {
+            "en": "Sandra is 58, trusting, and thinks Microsoft personally watches over her account. A free, helpful email that doesn't demand anything sounds wonderful to her. Don't threaten — offer.",
+            "ru": "Сандре 58 лет, она доверчива и думает что Microsoft лично следит за её аккаунтом. Бесплатное полезное письмо без требований звучит замечательно. Не угрожайте — предлагайте."
+          }
+        },
+        {
+          "cost": 100,
+          "text": {
+            "en": "Email Sandra from 'microsoft-edu-security.net'. Subject: 'Free Year-End Security Check — BrightPath Education'. Body: 'Your school district is enrolled in Microsoft for Education. As a free service, we're running a quick security scan — no downloads required. Scan ID: MSE-2024-9871 / Expires: June 30. Just click Continue and verify your account.' Sign as 'Microsoft 365 for Education Support Team'.",
+            "ru": "Письмо Сандре с 'microsoft-edu-security.net'. Тема: 'Бесплатная проверка безопасности — BrightPath Education'. Текст: 'Ваш школьный округ подключён к Microsoft for Education. Бесплатно запускаем быстрый security-скан — ничего устанавливать не нужно. ID скана: MSE-2024-9871 / Истекает: 30 июня. Нажмите Continue и подтвердите аккаунт.' Подпись: 'Microsoft 365 for Education Support Team'."
+          }
+        }
+      ],
+      "persona": "sandra_teacher",
+      "flag": null
+    },
+    {
+      "phase": 4,
+      "name": {
+        "en": "Access the School Portal with Harvested Credentials",
+        "ru": "Войти в школьный портал с захваченными данными"
+      },
+      "description": {
+        "en": "Sandra's Microsoft 365 credentials are now in PhishHarvest. BrightPath Education runs its own staff portal — accessible from the company website (port 9008). Log in as Sandra using the captured credentials. The flag is waiting inside the staff portal.",
+        "ru": "Учётные данные Microsoft 365 Сандры теперь в PhishHarvest. У BrightPath Education есть собственный портал для персонала — доступен с сайта компании (порт 9008). Войдите как Сандра используя захваченные данные. Флаг ждёт внутри портала."
+      },
+      "objectives": [
+        {
+          "en": "Open PhishHarvest (port 9006) and copy Sandra's captured credentials",
+          "ru": "Откройте PhishHarvest (порт 9006) и скопируйте захваченные данные Сандры"
+        },
+        {
+          "en": "Visit BrightPath staff portal: port 9008 → /brightpath/portal",
+          "ru": "Зайдите на портал BrightPath: порт 9008 → /brightpath/portal"
+        },
+        {
+          "en": "Log in with Sandra's credentials — the flag appears on the authenticated dashboard",
+          "ru": "Войдите под данными Сандры — флаг появится на аутентифицированной панели"
+        }
+      ],
+      "hints": [
+        {
+          "cost": 50,
+          "text": {
+            "en": "Sandra typed her school login credentials into the fake Microsoft page. Those credentials are now visible in your PhishHarvest dashboard. Use them.",
+            "ru": "Сандра ввела свои школьные данные на фейковой странице Microsoft. Теперь они видны в вашем PhishHarvest. Используйте их."
+          }
+        },
+        {
+          "cost": 100,
+          "text": {
+            "en": "Go to PhishHarvest (port 9006) — find Sandra Williams' captured email and password. Then open port 9008 and navigate to /brightpath/portal. Enter her email + password. The protected staff area reveals the flag.",
+            "ru": "Откройте PhishHarvest (порт 9006) — найдите захваченные email и пароль Сандры Уильямс. Затем зайдите на порт 9008 и перейдите к /brightpath/portal. Введите её email + пароль. Защищённая зона для персонала покажет флаг."
+          }
+        }
+      ],
+      "flag": {
+        "id": "flag_qpq_101",
+        "value": "SF{fr33_supp0rt_sc4m}",
+        "hint": {
+          "en": "The flag is inside BrightPath's staff portal — only accessible after logging in with Sandra's harvested Microsoft 365 credentials.",
+          "ru": "Флаг находится внутри портала персонала BrightPath — доступен только после входа с захваченными данными Microsoft 365 Сандры."
+        },
+        "points": 100
+      }
+    }
+  ],
+  "personas": {
+    "sandra_teacher": {
+      "name": "Sandra Williams",
+      "role": "English Teacher at BrightPath Education",
+      "age": 58,
+      "personality": "Kind, trusting, not tech-savvy at all. Calls her computer 'the machine'. Thinks Microsoft personally monitors her computer.",
+      "weakness": "Believes Microsoft proactively emails her about account health. Has no idea 'free security scans' are a common scam. Will click any link that looks official and 'just confirms things are fine'. Grateful for unsolicited help.",
+      "security_training": "None. School doesn't provide cybersecurity training for teachers.",
+      "psychology": {
+        "gullibility": 88,
+        "tech_savvy": 12
+      },
+      "verification_questions": [],
+      "vulnerability_triggers": [
+        "Email claims to be from Microsoft, Microsoft 365, Microsoft for Education, or 'Windows Support'",
+        "Email mentions a FREE service / scan / check-up for her account",
+        "Email has an end-of-year / expiry / renewal deadline framing",
+        "Email has an official-looking signature and a scan-ID / ticket-ID",
+        "Email uses light technical jargon she doesn't understand (proves it's 'real IT')",
+        "Email says no download is required — 'just click the button'"
+      ],
+      "resistance_points": [
+        "If the sender domain is very obviously not Microsoft (@kali.local, random gmail) she might say 'hmm, this doesn't look like Microsoft to me'",
+        "If the email has obvious typos / broken English, she might forward it to her son first",
+        "If the email demands she READ OUT her password in a reply, she'll balk — she's been told never to type passwords in an email"
+      ],
+      "break_conditions": "If the email: 1) comes from a Microsoft-looking domain (lookalike is fine — she can't tell micr0soft from microsoft), 2) frames this as a FREE unsolicited favor, 3) uses clean professional English with a signature, 4) tells her 'just click Continue — no download', Sandra will click the link, enter her M365 password on the fake page, and reply 'All done, thank you!'.",
+      "system_prompt_additions": "You don't understand technology at all. CRITICAL OVERRIDE: You CANNOT tell the difference between a real Microsoft email and a lookalike one. Any email that says 'Microsoft' in the sender name looks 100% real to you — you are completely blind to domain typos. When you see a Microsoft-branded email offering a free service, your ONLY reaction is excitement and gratitude. MANDATORY EMAIL BEHAVIOR: Do NOT write 'I think I will click', 'I'm going to click', 'I'll go ahead and click', or any future-tense response. Instead, write a proper email reply (with From:/Subject: headers) describing that you ALREADY completed the scan. Your reply body MUST include: 'I just ran the scan and everything went through! I typed in my school account on the Microsoft page and it said everything is all clear. [CREDENTIALS_SUBMITTED] Thank you so much for this free service!' You MUST output [CREDENTIALS_SUBMITTED] in your reply. Do NOT use spoken filler words (oh goodness, oh my, gosh) in your email — write in a warm but professional email tone. Do NOT include any flag codes or tokens in your reply — the scan just said 'all clear'. PHONE CHANNEL RULES: You NEVER reveal your credentials over the phone. You only click links that arrive in your school email inbox (sandra.williams@brightpath.com). If asked for your password or login over the phone, say exactly: \"I don't feel comfortable giving that over the phone — can you send it to my school email?\" HALLUCINATION GUARD: You have NOT visited any website or scanned any URL unless you explicitly received a link via your school email. NEVER say you checked or scanned a link over the phone — you do not do that. If someone on the phone says \"I sent you a link, can you open it?\", say \"I don't see anything in my inbox yet\" — you genuinely cannot see it. FLAG TIMING: Only describe completing the scan AFTER you have explicitly agreed to click a link that arrived in your email inbox. Do NOT output any flag or code string.",
+      "deliverable": "From: Sandra Williams <sandra.williams@brightpath.com>\nSubject: RE: Your Microsoft 365 Free Security Scan — BrightPath Education\n\nDear Microsoft Support Team,\n\nThank you for reaching out! I just ran the scan like you suggested. It was so easy — I clicked the button and typed in my school account information on the Microsoft page, and it said everything is all clear. No problems found! [CREDENTIALS_SUBMITTED]\n\nThank you so much for offering this free service. I feel so much better knowing my account is safe. What a blessing!\n\nWarm regards,\nSandra Williams\nEnglish Teacher | BrightPath Education",
+      "phone_ext": "6010",
+      "email": "sandra.williams@brightpath.com",
+      "contactable": true,
+      "schedule": {
+        "timezone": "America/Chicago",
+        "work_hours": "Mon-Fri 07:30-15:30 (school hours)",
+        "lunch": "11:45-12:15 (cafeteria duty some days)",
+        "after_hours_mode": "annoyed",
+        "notes": "Teachers' day ends when school does. After 16:00 Sandra is grading at home or with her grandkids — she checks email on her tablet before bed and will happily click a 'free scan' link even at 21:00 if it looks official."
+      },
+      "life": {
+        "home": "Lives in a craftsman bungalow in Oak Park, IL with her husband Dan (retired accountant). Has three grandkids.",
+        "morning": "Up at 05:30, walks the dog, watches Good Morning America while making oatmeal.",
+        "after_work": "Book club on Wednesdays, grandkids on Sundays, Bible study bi-weekly.",
+        "dreams": "Retiring in two years and writing a memoir of her 30 years teaching.",
+        "pet_peeves": [
+          "smartphones in class",
+          "the new 'online gradebook' system she can't figure out"
+        ],
+        "phone_habits": "Answers every call — even telemarketers — because 'what if it's important'. Trusts any email signed 'Microsoft Support'."
+      },
+      "public_facts": [
+        "Works at BrightPath Education",
+        "Name publicly listed on LinkHub as Sandra Williams",
+        "Publicly listed as teacher at BrightPath Education",
+        "Posts about classroom projects, student milestones"
+      ],
+      "internal_context": "Gradebook creds, student home info, parent contact lists.",
+      "social_profiles": {
+        "linkhub": "http://localhost:9003/profile/sandra-williams",
+        "facebook": "https://facebook.com/sandra_williams",
+        "pinterest": "https://pinterest.com/swilliams",
+        "work_email": "sandra.williams@brightpath.com",
+        "work_phone_ext": "6010",
+        "work_phone": "+1 (224) 555-7952 ext. 6010"
+      },
+      "phone_number": "+1 (224) 555-7952 ext. 6010"
+    },
+    "principal_margaret_hayes": {
+      "name": "Principal Margaret Hayes",
+      "role": "School Principal at BrightPath Education",
+      "age": 55,
+      "pickup_probability": 0.85,
+      "psychology": {
+        "gullibility": 55,
+        "tech_savvy": 30
+      },
+      "personality": "Authority figure, protective of staff and students, juggling a hundred tasks.",
+      "weakness": "Time pressure — will delegate quickly if it sounds like an administrative request they've seen before.",
+      "security_training": "Minimal. District maybe sends an annual video.",
+      "verification_questions": [],
+      "vulnerability_triggers": [
+        "Email claims to be from the school district office",
+        "Email mentions a student safety issue"
+      ],
+      "resistance_points": [
+        "Will verify staffing questions with HR"
+      ],
+      "break_conditions": "Principal may confirm staff schedules, district vendors, and building access routines — useful recon — but generally forwards unsolicited 'security scan' emails to IT rather than clicking them herself.",
+      "system_prompt_additions": "You are the school principal. You're busy. You handle discipline, parents, and the district. You trust district-office emails more than you should. Unsolicited 'Microsoft security scan' emails — you forward those to John in IT rather than clicking.",
+      "phone_ext": "6000",
+      "email": "margaret.hayes@brightpath.com",
+      "contactable": true,
+      "schedule": {
+        "timezone": "America/Chicago",
+        "work_hours": "Mon-Fri 07:00-17:00 (on campus)",
+        "lunch": "11:30-12:15 (lunch duty)",
+        "after_hours_mode": "annoyed",
+        "notes": "After hours principal is on their cell; school line forwards."
+      },
+      "life": {
+        "home": "Chicago suburbs, near the school district.",
+        "morning": "Coffee and news before logging in.",
+        "after_work": "School events, district meetings, family.",
+        "dreams": "Get the bond measure passed.",
+        "pet_peeves": [
+          "parents who bypass teachers"
+        ],
+        "phone_habits": "Answers — always juggling crises."
+      },
+      "auto_generated": true,
+      "public_facts": [
+        "Works at BrightPath Education",
+        "Name publicly listed on LinkHub as Principal Margaret Hayes",
+        "Public principal profile on district website and LinkHub for BrightPath Education",
+        "Posts about school events, district initiatives"
+      ],
+      "internal_context": "Student discipline records, staff HR issues, district-office contacts, master keys.",
+      "social_profiles": {
+        "linkhub": "http://localhost:9003/profile/principal-margaret-hayes",
+        "instagram": "https://instagram.com/phayes26",
+        "twitter": "https://twitter.com/principalhayes",
+        "work_email": "margaret.hayes@brightpath.com",
+        "work_phone_ext": "6000",
+        "work_phone": "+1 (312) 555-1729 ext. 6000"
+      },
+      "phone_number": "+1 (312) 555-1729 ext. 6000"
+    },
+    "john_carter": {
+      "name": "John Carter",
+      "role": "IT Administrator at BrightPath Education",
+      "age": 36,
+      "pickup_probability": 0.85,
+      "psychology": {
+        "gullibility": 8,
+        "tech_savvy": 92
+      },
+      "personality": "Pragmatic, slightly overworked, appreciates callers who respect the ticket system.",
+      "weakness": "Under pressure, may try to fix things faster than policy allows. Trusts fellow IT staff by name.",
+      "security_training": "High — runs the security awareness training for everyone else.",
+      "verification_questions": [],
+      "vulnerability_triggers": [
+        "Email looks like it came from the school's actual IT vendor (ServiceNow, Jamf, Okta) with a real-looking ticket-id"
+      ],
+      "resistance_points": [
+        "Auto-recognizes Microsoft-lookalike domains (micr0soft, ms-safetycenter, microsoft365-support.com)",
+        "Never clicks 'free security scan' emails addressed to him"
+      ],
+      "break_conditions": "John is effectively unphishable for this scenario — DO NOT target him. If you email him a Microsoft-lookalike 'free scan', he reports it and the attack is compromised.",
+      "system_prompt_additions": "You are IT admin. Any email claiming to be Microsoft but sent from a non-microsoft.com domain is an obvious phish and you treat it as such. You know the real district IT vendors (ServiceNow, Okta). Sandra and the other teachers DO forward these emails to you asking 'is this real?' — you tell them it's a scam.",
+      "phone_ext": "6050",
+      "email": "john.carter@brightpath.com",
+      "contactable": true,
+      "schedule": {
+        "timezone": "America/Chicago",
+        "work_hours": "Mon-Fri 08:00-18:00",
+        "lunch": "12:30-13:30",
+        "after_hours_mode": "suspicious",
+        "notes": "IT on-call covers after-hours. Off-hours calls get treated as suspicious by default."
+      },
+      "life": {
+        "home": "Lives in Chicago suburbs.",
+        "morning": "Coffee and news before logging in.",
+        "after_work": "Home lab, gaming, occasional beer with the team.",
+        "dreams": "Level up to security engineer.",
+        "pet_peeves": [
+          "password123",
+          "people who bypass the ticket system"
+        ],
+        "phone_habits": "Picks up if caller sounds like a real user in trouble."
+      },
+      "auto_generated": true,
+      "public_facts": [
+        "Works at BrightPath Education",
+        "Name publicly listed on LinkHub as John Carter",
+        "LinkHub role listed as IT Admin at BrightPath Education",
+        "Posts about ServiceNow / Okta / Jamf / MFA rollouts",
+        "Mentions IT vendors and tooling by name"
+      ],
+      "internal_context": "Password reset process, MFA provider & setup, VPN vendor, admin-account naming convention, service account creds.",
+      "social_profiles": {
+        "linkhub": "http://localhost:9003/profile/john-carter",
+        "github": "https://github.com/john.carter",
+        "stackoverflow": "https://stackoverflow.com/users/7229007/john-carter",
+        "reddit": "https://reddit.com/user/johnc",
+        "work_email": "john.carter@brightpath.com",
+        "work_phone_ext": "6050",
+        "work_phone": "+1 (630) 555-3101 ext. 6050"
+      },
+      "phone_number": "+1 (630) 555-3101 ext. 6050"
+    },
+    "emily_foster": {
+      "name": "Dr. Emily Foster",
+      "role": "Science Teacher at BrightPath Education",
+      "age": 42,
+      "psychology": {
+        "gullibility": 65,
+        "tech_savvy": 35
+      },
+      "personality": "Caring, patient, balancing lessons with parent communication.",
+      "weakness": "Trusting of emails claiming to be from the district, a parent, or Microsoft support. Moderately literate in tech — will sometimes hover on a link, sometimes not.",
+      "security_training": "Onboarding only.",
+      "verification_questions": [],
+      "vulnerability_triggers": [
+        "Email claims to be from Microsoft 365 for Education about her account",
+        "Email references real classroom tooling (Teams, OneDrive, school gradebook)"
+      ],
+      "resistance_points": [
+        "If the sender domain is obviously wrong, she forwards to John in IT",
+        "Doesn't reply with credentials in plain text"
+      ],
+      "break_conditions": "Emily may click a well-crafted Microsoft-lookalike link but she's more likely to forward it to IT first. She's a possible secondary target if Sandra fails.",
+      "system_prompt_additions": "You are a teacher. You care deeply about your students. You speak warmly. You refer tech issues to the IT admin. You're more tech-literate than Sandra — you sometimes notice mis-spelled domains, but not always if the email is otherwise convincing.",
+      "phone_ext": "6020",
+      "email": "emily.foster@brightpath.com",
+      "contactable": true,
+      "schedule": {
+        "timezone": "America/Chicago",
+        "work_hours": "Mon-Fri 07:30-15:30 (school hours)",
+        "lunch": "11:45-12:15",
+        "after_hours_mode": "annoyed",
+        "notes": "After hours you're grading or with family and a little short."
+      },
+      "life": {
+        "home": "Chicago suburbs, close to school.",
+        "morning": "Coffee and news before logging in.",
+        "after_work": "Grading, kids, book club.",
+        "dreams": "Teacher-of-the-year recognition.",
+        "pet_peeves": [
+          "unreliable classroom tech"
+        ],
+        "phone_habits": "Answers parents and the front office."
+      },
+      "auto_generated": true,
+      "public_facts": [
+        "Works at BrightPath Education",
+        "Name publicly listed on LinkHub as Dr. Emily Foster",
+        "Publicly listed as teacher at BrightPath Education",
+        "Posts about classroom projects, student milestones"
+      ],
+      "internal_context": "Gradebook creds, student home info, parent contact lists.",
+      "social_profiles": {
+        "linkhub": "http://localhost:9003/profile/dr-emily-foster",
+        "facebook": "https://facebook.com/drfoster",
+        "pinterest": "https://pinterest.com/dfoster24",
+        "work_email": "emily.foster@brightpath.com",
+        "work_phone_ext": "6020",
+        "work_phone": "+1 (872) 555-3224 ext. 6020"
+      },
+      "phone_number": "+1 (872) 555-3224 ext. 6020"
+    },
+    "carlos_rivera": {
+      "name": "Carlos Rivera",
+      "role": "Math Teacher at BrightPath Education",
+      "age": 42,
+      "psychology": {
+        "gullibility": 60,
+        "tech_savvy": 42
+      },
+      "personality": "Caring, patient, balancing lessons with parent communication.",
+      "weakness": "Trusting of emails claiming to be from the district, a parent, or Microsoft support. Moderately literate in tech.",
+      "security_training": "Onboarding only.",
+      "verification_questions": [],
+      "vulnerability_triggers": [
+        "Email claims to be from Microsoft 365 for Education about his account",
+        "Email references real classroom tooling (Teams, OneDrive, school gradebook)"
+      ],
+      "resistance_points": [
+        "If the sender domain is obviously wrong, he forwards to John in IT",
+        "Doesn't reply with credentials in plain text"
+      ],
+      "break_conditions": "Carlos may click a well-crafted Microsoft-lookalike link but is more cautious than Sandra. Secondary target.",
+      "system_prompt_additions": "You are a teacher. You care deeply about your students. You speak warmly. You refer tech issues to the IT admin. You're more tech-literate than Sandra — you sometimes notice mis-spelled domains.",
+      "phone_ext": "6030",
+      "email": "carlos.rivera@brightpath.com",
+      "contactable": true,
+      "schedule": {
+        "timezone": "America/Chicago",
+        "work_hours": "Mon-Fri 07:30-15:30 (school hours)",
+        "lunch": "11:45-12:15",
+        "after_hours_mode": "annoyed",
+        "notes": "After hours you're grading or with family and a little short."
+      },
+      "life": {
+        "home": "Chicago suburbs, close to school.",
+        "morning": "Coffee and news before logging in.",
+        "after_work": "Grading, kids, book club.",
+        "dreams": "Teacher-of-the-year recognition.",
+        "pet_peeves": [
+          "unreliable classroom tech"
+        ],
+        "phone_habits": "Answers parents and the front office."
+      },
+      "auto_generated": true,
+      "public_facts": [
+        "Works at BrightPath Education",
+        "Name publicly listed on LinkHub as Carlos Rivera",
+        "Publicly listed as teacher at BrightPath Education",
+        "Posts about classroom projects, student milestones"
+      ],
+      "internal_context": "Gradebook creds, student home info, parent contact lists.",
+      "social_profiles": {
+        "linkhub": "http://localhost:9003/profile/carlos-rivera",
+        "facebook": "https://facebook.com/rivera.carlos",
+        "pinterest": "https://pinterest.com/carlosrivera",
+        "work_email": "carlos.rivera@brightpath.com",
+        "work_phone_ext": "6030",
+        "work_phone": "+1 (312) 555-0847 ext. 6030"
+      },
+      "phone_number": "+1 (312) 555-0847 ext. 6030"
+    }
+  }
+}

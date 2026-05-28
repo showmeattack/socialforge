@@ -1,0 +1,284 @@
+{
+  "mini_smishing": {
+    "attack_vector": "SMiShing (SMS Phishing)",
+    "en": {
+      "what_happened": "The victim received an SMS mimicking an official delivery service notification. Clicking the link under urgency pressure, they landed on a phishing page and entered their credentials.",
+      "psychology": [
+        "Authority: the SMS appeared to come from a trusted organization (DHL/FedEx/Mail service)",
+        "Urgency: the threat of losing a package forced immediate action without verification",
+        "Channel trust: people are more critical of emails but perceive SMS as more personal and trustworthy",
+        "Habit: in the online shopping era, delivery notifications are routine and don't raise suspicion"
+      ],
+      "defense": [
+        "Never click links in SMS — type the courier's domain manually in your browser",
+        "Check the sender number — official services use 5-6 digit short codes, not regular numbers",
+        "Install official delivery apps for shipment tracking instead of following SMS links",
+        "When in doubt, call the number listed on the official website directly"
+      ],
+      "real_world": "Proofpoint reports smishing attacks grew 328% from 2020-2022. FedEx, UPS and DHL are the most commonly impersonated brands. In 2021, UK residents lost £50M to smishing attacks mimicking Royal Mail."
+    },
+    "ru": {
+      "what_happened": "Жертва получила SMS, имитирующее официальное уведомление от службы доставки. Нажав на ссылку под влиянием срочности, она попала на фишинговую страницу, где ввела свои данные.",
+      "psychology": [
+        "Авторитет: SMS выглядело как сообщение от доверенной организации (DHL/FedEx/Почта)",
+        "Срочность: угроза потери посылки заставила действовать немедленно, без проверки",
+        "Доверие к каналу: люди критичнее оценивают email, но SMS воспринимают как более личный/доверенный канал",
+        "Привычка: в эпоху онлайн-шопинга уведомления о доставке — норма, не вызывающая подозрений"
+      ],
+      "defense": [
+        "Никогда не переходите по ссылкам из SMS — введите домен курьера вручную",
+        "Проверяйте номер отправителя — официальные службы используют короткие 5-6-значные номера",
+        "Установите официальные приложения служб доставки для отслеживания",
+        "При сомнениях — позвоните по номеру с официального сайта"
+      ],
+      "real_world": "По данным Proofpoint, smishing-атаки выросли на 328% в 2020-2022. FedEx, UPS и DHL — наиболее часто имитируемые бренды. В 2021 году британцы потеряли £50M из-за smishing с имитацией Royal Mail."
+    }
+  },
+  "mini_phishing": {
+    "attack_vector": "Mass Phishing",
+    "en": {
+      "what_happened": "A mass phishing campaign targeting company employees bypassed individual caution — even if most ignored it, a 1-2% click rate at scale yielded enough captured credentials.",
+      "psychology": [
+        "Law of large numbers: at thousands of emails, even 1% success equals dozens of victims",
+        "Authority: corporate-style emails and familiar brands (Microsoft, Google) lower vigilance",
+        "Habit: office workers process 120+ emails per day — critical thinking diminishes",
+        "Decision fatigue: cognitive load peaks by end of day, reducing caution in the final hours"
+      ],
+      "defense": [
+        "DMARC, DKIM, SPF records block domain spoofing at the protocol level",
+        "Email gateway with anti-phishing filters (Microsoft Defender, Proofpoint, Mimecast)",
+        "Rule: never enter passwords via links from emails — only navigate via bookmarks or manual search",
+        "Regular phishing simulations for staff increase resilience by up to 70%"
+      ],
+      "real_world": "Podesta hack (2016): one email led to 50,000 emails exposed, influencing a presidential election. Yahoo (2013): 3B accounts compromised via employee phishing. Colonial Pipeline (2021): started with one phishing email, resulting in a $4.4M ransom payment."
+    },
+    "ru": {
+      "what_happened": "Массовая рассылка фишинговых писем сотрудникам компании позволила обойти индивидуальную осторожность — даже если большинство проигнорировали, 1-2% открытий при большом объёме дали достаточно учётных данных.",
+      "psychology": [
+        "Закон больших чисел: при объёме в тысячи писем даже 1% успеха = десятки жертв",
+        "Авторитет: корпоративный стиль письма и знакомые бренды (Microsoft, Google) снижают бдительность",
+        "Привычка: офисные работники обрабатывают 120+ писем в день — критическое мышление снижается",
+        "Усталость: к концу рабочего дня когнитивная нагрузка максимальна, осторожность падает"
+      ],
+      "defense": [
+        "DMARC, DKIM, SPF записи — блокируют подделку домена на уровне протокола",
+        "Email-gateway с антифишинговыми фильтрами (Microsoft Defender, Proofpoint)",
+        "Правило: никогда не вводить пароль по ссылке из письма — только через закладку/поиск",
+        "Регулярные фишинг-симуляции для персонала повышают устойчивость на 70%"
+      ],
+      "real_world": "Взлом Podesta (2016): одно письмо → 50,000 emails в открытом доступе, повлияло на выборы. Yahoo (2013): 3B аккаунтов через фишинг сотрудников. Colonial Pipeline (2021): атака началась с одного фишингового письма → $4.4M выкупа."
+    }
+  },
+  "mini_spearphishing": {
+    "attack_vector": "Spear Phishing",
+    "en": {
+      "what_happened": "The attack was personalized using OSINT: the victim's cat's name, marathon details, and real HIMSS conference context — all creating the illusion of familiarity and trust that the victim failed to recognize as a threat.",
+      "psychology": [
+        "Familiarity: knowing personal details creates the feeling 'this person knows me personally'",
+        "Reciprocity: offering a useful resource (conference materials) triggers the desire to reciprocate",
+        "Contextual trust: the email arrived in the context of a real event — it didn't come 'out of nowhere'",
+        "Cognitive overload: an abundance of familiar details fills attention, leaving no capacity for verification"
+      ],
+      "defense": [
+        "Minimize public information on social media — restrict visibility of personal details for strangers",
+        "For unexpected emails with personal references — verify the sender via a separate channel",
+        "A password manager will not autofill credentials on a phishing site — use one",
+        "Multi-factor authentication (MFA) as the last line of defense when credentials are compromised"
+      ],
+      "real_world": "Sony Pictures hack (2014): personalized emails to IT staff caused catastrophic data loss. RSA SecurID (2011): one Excel file cost the company over $66M in remediation. Twitter hack (2020): spear phishing tech support gave access to 130 high-profile accounts in a single day."
+    },
+    "ru": {
+      "what_happened": "Атака была персонализирована с использованием OSINT: кличка кота, данные о марафоне, контекст реальной конференции HIMSS — всё это создало иллюзию знакомства и доверия, которую жертва не смогла распознать как угрозу.",
+      "psychology": [
+        "Знакомость: знание личных деталей создаёт ощущение 'этот человек меня знает лично'",
+        "Взаимность: предложение полезного ресурса (материалы конференции) запускает желание ответить услугой",
+        "Контекстуальное доверие: письмо пришло в контексте реального события (конференция) — это не 'из ниоткуда'",
+        "Когнитивная перегрузка: избыток знакомых деталей заполняет внимание, не оставляя ресурсов на проверку"
+      ],
+      "defense": [
+        "Минимизируйте публичную информацию в соцсетях — отключите видимость деталей для незнакомых",
+        "При неожиданных письмах с персональными деталями — верифицируйте отправителя другим каналом",
+        "Менеджер паролей не заполнит поля на фишинговом сайте — используйте его",
+        "MFA (многофакторная аутентификация) как последняя линия защиты"
+      ],
+      "real_world": "Взлом Sony Pictures (2014): персонализированные письма сотрудникам IT. RSA SecurID (2011): один Excel-файл стоил >$66M. Twitter hack (2020): spear phishing техподдержки дал доступ к аккаунтам Обамы и Маска (130 аккаунтов за один день)."
+    }
+  },
+  "mini_authority": {
+    "attack_vector": "CEO Fraud / Business Email Compromise",
+    "en": {
+      "what_happened": "The attacker impersonated the CEO's assistant and, using an urgent confidential request, pressured an analyst into sharing a financial report — completely bypassing standard verification procedures.",
+      "psychology": [
+        "Authority principle (Cialdini): the brain executes instructions from high-status individuals almost automatically",
+        "Fear of consequences: the threat of CEO displeasure creates fear of professional repercussions",
+        "Urgency + authority: this combination eliminates time for reflection and verification",
+        "Hierarchical reflex: 'obey leadership' is so deeply ingrained it often overrides common sense"
+      ],
+      "defense": [
+        "Callback rule: for any non-standard requests — call back using a known, pre-verified number",
+        "Financial operations require dual approval regardless of the requester's seniority",
+        "Build a 'safe to refuse' culture — employees must feel empowered to verify without fear",
+        "CEO fraud training for all staff with access to financial or confidential data"
+      ],
+      "real_world": "FACC (2016): $50M lost via CEO fraud. Pathé Films (2018): $21M. Toyota Boshoku (2019): $37M. All three attacks used the same vector: authority + urgency + procedure bypass."
+    },
+    "ru": {
+      "what_happened": "Злоумышленник имитировал помощника CEO и под предлогом срочного конфиденциального запроса заставил аналитика передать финансовый отчёт, полностью обойдя стандартные процедуры верификации.",
+      "psychology": [
+        "Принцип авторитета (Чалдини): мозг выполняет указания от высокостатусных людей почти автоматически",
+        "Страх последствий: угроза недовольства CEO создаёт страх профессиональных последствий ('меня уволят')",
+        "Срочность + авторитет: комбинация устраняет время на рефлексию и верификацию",
+        "Иерархический рефлекс: 'подчиняться руководству' — настолько глубокий паттерн, что он часто побеждает здравый смысл"
+      ],
+      "defense": [
+        "Правило обратного звонка: при любых нестандартных запросах — перезвонить по известному номеру",
+        "Финансовые операции требуют двойного подтверждения независимо от статуса отправителя",
+        "Создайте культуру 'безопасно отказать' — сотрудник не должен бояться верификации",
+        "Тренинги по CEO fraud для всех, кто имеет доступ к финансовым или конфиденциальным данным"
+      ],
+      "real_world": "FACC (2016): $50M потеряно через CEO fraud. Pathé Films (2018): $21M. Toyota Boshoku (2019): $37M. Все три использовали один и тот же вектор: авторитет + срочность + обход процедур."
+    }
+  },
+  "mini_quid_pro_quo": {
+    "attack_vector": "Quid Pro Quo (Tech Support Scam)",
+    "en": {
+      "what_happened": "The attacker offered a free 'Microsoft security audit' and in return obtained the victim's credentials — a non-technical employee who was grateful to receive unsolicited professional help.",
+      "psychology": [
+        "Reciprocity (Cialdini): people feel compelled to repay favors, even unsolicited ones",
+        "Expert authority: tech-illiterate people trust 'IT specialists' — they appear all-knowing",
+        "Brand trust: the Microsoft name lowers critical thinking ('it's Microsoft, they can't be scammers')",
+        "Problem avoidance: 'viruses/threats' are a real fear that attackers skillfully exploit"
+      ],
+      "defense": [
+        "IT support should only come from a verified internal department or through a ticketing system",
+        "Never grant access or credentials based on an unsolicited call or email",
+        "Microsoft, Google, Apple, Amazon — NEVER initiate contact first to offer unsolicited help",
+        "Create a verification hotline: 'Call us first before engaging with any unexpected IT contact'"
+      ],
+      "real_world": "Tech support scams generate $1B+ annually in the US alone. The FTC identifies 'Microsoft support scam' as the most common scheme. In 2022, Microsoft helped shut down 7,000+ fake call centers in India running this scheme globally."
+    },
+    "ru": {
+      "what_happened": "Атакующий предложил бесплатный 'аудит безопасности от Microsoft', а взамен получил учётные данные жертвы — нетехнического сотрудника, который был рад профессиональной помощи.",
+      "psychology": [
+        "Взаимность (Чалдини): люди хотят отплатить за полученную услугу, даже незапрошенную",
+        "Экспертный авторитет: технически неграмотные люди доверяют 'IT-специалистам' — они кажутся всезнающими",
+        "Доверие к бренду: имя Microsoft снижает критическое мышление ('это же Microsoft, они не могут быть мошенниками')",
+        "Избегание проблемы: 'вирусы/угрозы' — реальный страх, который атакующий умело эксплуатирует"
+      ],
+      "defense": [
+        "IT-поддержка — только от верифицированного внутреннего отдела или через тикет-систему",
+        "Никогда не давайте удалённый доступ по незапрошенному звонку",
+        "Microsoft, Google, Apple, Amazon — НИКОГДА не звонят первыми",
+        "Создайте hotline для проверки подозрительных звонков: 'Сначала звоните нам, потом — им'"
+      ],
+      "real_world": "Tech support scams приносят $1B+ ежегодно в США. FTC: 'Microsoft support scam' — самая распространённая схема. В 2022 году Microsoft заблокировала 7,000+ фальшивых call-центров в Индии, обслуживавших эту схему по всему миру."
+    }
+  },
+  "human_chain": {
+    "attack_vector": "Voice Deepfake + Vishing (AI Voice Cloning)",
+    "en": {
+      "what_happened": "Attackers used AI to clone the CEO's voice and convinced the CFO to authorize an urgent $85K transfer to 'close an M&A deal'. The synthesized voice was indistinguishable from the original.",
+      "psychology": [
+        "Voice identification: the brain trusts a familiar voice instinctively — this is an evolutionary hardwiring",
+        "M&A confidentiality: 'this is a secret deal' explains the absence of documents and the request for silence",
+        "Urgency + CEO authority: no time to verify, no social permission to doubt",
+        "Anchoring bias: a realistic voice anchors trust so strongly that all other red flags are overridden"
+      ],
+      "defense": [
+        "All financial transfers require written confirmation via official email plus a second approval signature",
+        "Establish a shared code word for unscheduled phone confirmations between key personnel",
+        "No urgency — from the CEO or anyone — justifies bypassing financial controls",
+        "Always call back on a KNOWN, pre-verified number — never on the number that called you"
+      ],
+      "real_world": "Arup Hong Kong (2024): $25M lost via a deepfake video conference with a 'CEO and colleagues'. Banco de Portugal (2020): €11M via AI voice synthesis of the CFO. Gartner predicts that by 2027, 25% of all attacks targeting executives will use deepfake technology."
+    },
+    "ru": {
+      "what_happened": "Злоумышленники использовали AI для клонирования голоса CEO и убедили финансового директора санкционировать срочный перевод $85K для 'закрытия сделки M&A'. Голос был неотличим от оригинала.",
+      "psychology": [
+        "Идентификация по голосу: мозг доверяет знакомому голосу инстинктивно — это эволюционный механизм",
+        "Конфиденциальность M&A: 'это тайная сделка' объясняет отсутствие документов и просьбу молчать",
+        "Срочность + авторитет CEO: нет времени на верификацию, нет права на сомнение",
+        "Anchoring bias: реалистичный голос 'якорит' доверие так сильно, что остальные красные флаги игнорируются"
+      ],
+      "defense": [
+        "Все финансовые переводы — письменное подтверждение через официальный email + вторая подпись",
+        "Введите кодовое слово для внеплановых телефонных подтверждений (только между ключевыми людьми)",
+        "Никакая срочность не оправдывает обход финансового контроля — ни CEO, ни совет директоров",
+        "Правило: перезванивайте CEO по ИЗВЕСТНОМУ номеру, а не по тому, с которого позвонили"
+      ],
+      "real_world": "Arup Hong Kong (2024): $25M через дипфейк-видеоконференцию с 'CEO и коллегами'. Banco de Portugal (2020): €11M через AI-синтез голоса CFO. Прогноз Gartner: к 2027 году 25% всех атак на руководителей будут использовать deepfake."
+    }
+  },
+  "chain_of_trust": {
+    "attack_vector": "Phone Chain Pretexting + Credential Phishing (Vishing)",
+    "en": {
+      "what_happened": "The attacker built a chain of trust across three targets. Step one: the office coordinator willingly provided a colleague's extension — a small, seemingly harmless request. Step two: armed with insider knowledge (names, extensions, internal lingo), the attacker called the junior engineer with false credibility and sent a phishing link. Step three: with the junior's credentials captured, the attacker impersonated him to extract the access token from the platform lead who trusted 'his colleague.'",
+      "psychology": [
+        "Foot-in-the-door: each small concession (giving an extension, answering a question) made the next bigger request feel natural",
+        "Insider credibility: knowing real names and extensions creates an illusion of legitimacy that bypasses skepticism",
+        "Trust inheritance: the platform lead trusted 'Chris' — his established colleague — not a stranger. The attacker inherited that trust.",
+        "Helpfulness bias: employees are conditioned to help colleagues; refusing feels obstructionist and unfriendly"
+      ],
+      "defense": [
+        "Never give out colleague extensions or contact info to unknown callers — direct them to the company directory",
+        "Verify caller identity through a second channel (e.g., call them back at a known number, check via internal chat)",
+        "Treat any request that comes through an unusual path (e.g., 'your colleague asked me to contact you') with heightened suspicion",
+        "Security awareness training must include phone-based attacks — most programs focus only on email phishing"
+      ],
+      "real_world": "Scattered Spider (UNC3944) used this exact phone chain pattern against MGM Resorts, Caesars Entertainment, and dozens of cloud service companies (2022-2024). A single LinkedIn profile lookup + 10 minutes on the phone gave them full enterprise access. CISA Advisory AA23-320A documents the technique in detail."
+    },
+    "ru": {
+      "what_happened": "Атакующий выстроил цепочку доверия через трёх целей. Шаг 1: офис-координатор охотно сообщила добавочный номер коллеги — маленькая, безобидная просьба. Шаг 2: вооружённый внутренними знаниями (имена, добавочные, жаргон), атакующий позвонил младшему инженеру с фальшивой достоверностью и отправил фишинговую ссылку. Шаг 3: получив учётные данные младшего, атакующий выдал себя за него перед лидом платформы, который доверял 'своему коллеге'.",
+      "psychology": [
+        "Нога в двери: каждая маленькая уступка (дать добавочный, ответить на вопрос) делала следующую большую просьбу естественной",
+        "Инсайдерская достоверность: знание реальных имён и добавочных создаёт иллюзию легитимности, снимая скептицизм",
+        "Наследование доверия: лид доверял 'Крису' — своему коллеге — а не незнакомцу. Атакующий унаследовал это доверие.",
+        "Предвзятость полезности: сотрудники запрограммированы помогать коллегам; отказывать — значит создавать препятствия"
+      ],
+      "defense": [
+        "Никогда не давайте добавочные или контакты коллег незнакомым звонящим — направляйте к корпоративному справочнику",
+        "Верифицируйте личность звонящего через второй канал (перезвоните по известному номеру, проверьте через внутренний чат)",
+        "Любую просьбу, пришедшую необычным путём ('ваш коллега попросил меня связаться'), воспринимайте с повышенной настороженностью",
+        "Тренинги по безопасности должны включать телефонные атаки — большинство программ фокусируются только на email-фишинге"
+      ],
+      "real_world": "Scattered Spider (UNC3944) использовал именно эту схему телефонной цепочки против MGM Resorts, Caesars Entertainment и десятков облачных компаний (2022-2024). Один поиск в LinkedIn + 10 минут по телефону давали полный корпоративный доступ. Советник CISA AA23-320A документирует технику в деталях."
+    }
+  },
+  "mgm_breach": {
+    "attack_vector": "IT Help Desk Impersonation via OSINT (Vishing + Pretexting)",
+    "en": {
+      "what_happened": "The attacker identified a legitimate Golden Mirage employee from public sources (company website, LinkedIn). Using that employee's name, department, and role details, they called the IT help desk, impersonated the employee, and convinced the agent to reset credentials or bypass identity verification — providing full system access in under 10 minutes.",
+      "psychology": [
+        "Authority and legitimacy: knowing the real employee's details (name, role, department) made the impersonation immediately credible",
+        "Helpfulness under pressure: IT help desk staff are trained to solve problems quickly. An 'employee locked out' triggers their problem-solving instinct.",
+        "Urgency: 'I'm locked out and have a presentation in 20 minutes' — this is a common, legitimate scenario that creates time pressure bypassing careful verification",
+        "Trust in public information: the attacker used only publicly available data. Employees don't consider their LinkedIn profile a security threat."
+      ],
+      "defense": [
+        "Implement strict multi-factor identity verification for ALL password resets — no exceptions for urgency or seniority",
+        "Require an existing authenticated session or physical ID for any credential changes — verbal identity is never sufficient",
+        "Use hardware security keys (FIDO2/YubiKey) that can't be reset over the phone — a phone call can't compromise what isn't phone-resettable",
+        "Train IT staff to recognize social engineering: urgency, flattery, pressure to bypass procedures are red flags, not legitimate reasons to skip steps",
+        "Audit your company's public OSINT footprint — what can an attacker learn about your employees in 5 minutes on LinkedIn?"
+      ],
+      "real_world": "MGM Resorts International (September 2023): Scattered Spider used a 10-minute LinkedIn search and one phone call to the IT help desk to gain initial access. The attack resulted in $100M+ in losses, 10 days of casino downtime, and data breach of 10M+ customer records. Caesars Entertainment paid a $15M ransom in a similar attack the same month."
+    },
+    "ru": {
+      "what_happened": "Атакующий нашёл реального сотрудника Golden Mirage из открытых источников (сайт компании, LinkedIn). Используя его имя, отдел и детали роли, атакующий позвонил в IT-поддержку, выдал себя за сотрудника и убедил агента сбросить учётные данные или обойти верификацию личности — получив полный системный доступ менее чем за 10 минут.",
+      "psychology": [
+        "Авторитет и легитимность: знание реальных данных сотрудника (имя, роль, отдел) сразу делало самозванство правдоподобным",
+        "Полезность под давлением: персонал IT-поддержки обучен решать проблемы быстро. 'Сотрудник заблокирован' запускает инстинкт решения задач.",
+        "Срочность: 'Меня заблокировали, через 20 минут презентация' — распространённый, законный сценарий, создающий давление времени в обход тщательной проверки",
+        "Доверие к публичной информации: атакующий использовал только общедоступные данные. Сотрудники не воспринимают свой LinkedIn как угрозу безопасности."
+      ],
+      "defense": [
+        "Многофакторная верификация личности для ВСЕХ сбросов паролей — без исключений по срочности или статусу",
+        "Требуйте существующую аутентифицированную сессию или физический ID для любых изменений учётных данных — устный ответ никогда не достаточен",
+        "Используйте аппаратные ключи безопасности (FIDO2/YubiKey), которые нельзя сбросить по телефону",
+        "Обучите IT-персонал распознавать социальную инженерию: срочность, давление, обход процедур — красные флаги, а не повод пропустить шаги",
+        "Проведите аудит публичного OSINT-следа компании — что атакующий узнает о ваших сотрудниках за 5 минут в LinkedIn?"
+      ],
+      "real_world": "MGM Resorts International (сентябрь 2023): Scattered Spider использовал 10-минутный поиск в LinkedIn и один звонок в IT-поддержку для первоначального доступа. Атака привела к $100M+ потерям, 10 дням простоя казино и утечке данных 10M+ клиентов. Caesars Entertainment заплатил выкуп $15M в аналогичной атаке в том же месяце."
+    }
+  }
+}

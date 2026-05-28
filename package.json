@@ -1,0 +1,18 @@
+{
+  "name": "socialforge",
+  "version": "0.1.0",
+  "description": "Social Engineering CTF Training Platform",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n backend,frontend,targets -c blue,green,yellow \"npm run dev:backend\" \"npm run dev:frontend\" \"npm run dev:targets\"",
+    "dev:backend": "cd backend && python -m uvicorn main:app --reload --port 8000",
+    "dev:frontend": "cd frontend && npx vite --port 3000",
+    "dev:targets": "cd targets && python run_all.py",
+    "build": "cd frontend && npx vite build",
+    "start": "cd backend && python -m uvicorn main:app --port 8000"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "concurrently": "^9.0.1"
+  }
+}

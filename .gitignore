@@ -1,0 +1,48 @@
+# Secrets — exclude real .env files but keep .env.example
+backend/.env
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.db
+*.db-shm
+*.db-wal
+*.egg-info/
+.venv/
+venv/
+dist/
+build/
+
+# Node
+node_modules/
+.next/
+dist/
+*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.cursor/
+.vscode/settings.json
+.idea/
+
+# Logs and runtime output
+*.log
+*.txt
+logs/
+
+# Internal dev files
+CLAUDE.md
+progress.md
+npc_test.py
+find_9003.ps1
+backend/list_files.ps1
+graphify-out/
+test-results/
+*.err

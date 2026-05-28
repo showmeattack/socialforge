@@ -1,0 +1,166 @@
+{
+  "type": "operation",
+  "id": "mass_phishing",
+  "title": {
+    "en": "Spray & Pray: Mass Phishing Credential Harvest",
+    "ru": "Массовый фишинг: сбор учётных данных"
+  },
+  "description": {
+    "en": "Real attackers don't target one person — they blast thousands. Build a convincing fake login page, craft a fear-based email, and launch a mass campaign. Credentials will trickle in from employees who can't be reached any other way. Collect 5 valid credentials, then sell them on the DarkHub marketplace to claim your flag.",
+    "ru": "Реальные атакующие не ограничиваются одной жертвой — они рассылают тысячи писем. Создайте убедительную фейковую страницу входа, составьте письмо на основе страха и запустите массовую кампанию. Учётные данные поступят от сотрудников, до которых иначе не добраться. Соберите 5 валидных записей и выставьте их на продажу в DarkHub, чтобы получить флаг."
+  },
+  "objective": {
+    "en": "Harvest credentials from at least 5 employees using mass phishing, then submit them to the DarkHub credential marketplace to get the flag",
+    "ru": "Собрать учётные данные минимум 5 сотрудников с помощью массового фишинга, затем выставить их на DarkHub для получения флага"
+  },
+  "difficulty": "easy",
+  "category": "phishing",
+  "points": 150,
+  "estimated_time": "15-20 min",
+  "target_company": {
+    "name": "Multiple Organizations",
+    "domain": "various",
+    "industry": "Various",
+    "fake_ip": "10.10.0.0",
+    "company_slug": null,
+    "website_port": 9005,
+    "employees": []
+  },
+  "flag_config": {
+    "type": "darknet_submit",
+    "creds_required": 5,
+    "full_flag": "SF{m4ss_ph1sh_h4rv3st}",
+    "description": "Flag is revealed by the DarkHub marketplace after you submit 5 valid harvested credentials."
+  },
+  "attack_chain": [
+    {
+      "phase": 1,
+      "name": {
+        "en": "Build the Phishing Kit",
+        "ru": "Создайте фишинг-кит"
+      },
+      "description": {
+        "en": "Use the Phishing Studio constructor to create a convincing fake login page. Choose your template (Microsoft 365 works well against most corporate targets), pick a convincing domain (avoid real microsoft.com — spam filters catch it), and craft the page headline and body. A high quality score means more NPCs will click through.",
+        "ru": "Используйте конструктор Phishing Studio для создания убедительной фейковой страницы входа. Выберите шаблон (Microsoft 365 хорошо работает против большинства корпоративных целей), придумайте убедительный домен (избегайте реального microsoft.com — спам-фильтры его поймают) и составьте заголовок и тело страницы. Высокий показатель качества = больше НПС кликнут."
+      },
+      "objectives": [
+        {
+          "en": "Open Phishing Studio (Channels → Phishing Studio)",
+          "ru": "Откройте Phishing Studio (Каналы → Phishing Studio)"
+        },
+        {
+          "en": "Choose a template and configure the domain, headline, and body text",
+          "ru": "Выберите шаблон и настройте домен, заголовок и текст"
+        },
+        {
+          "en": "Aim for quality score above 70% for best results",
+          "ru": "Стремитесь к показателю качества выше 70% для наилучших результатов"
+        }
+      ],
+      "hints": [
+        {
+          "cost": 50,
+          "text": {
+            "en": "Before sending, you need bait. Visit the Phishing Builder (port 9006) and create a fake Microsoft 365 login page.",
+            "ru": "Перед отправкой нужна приманка. Зайди в Phishing Builder (порт 9006) и создай фейковую страницу входа Microsoft 365."
+          }
+        },
+        {
+          "cost": 100,
+          "text": {
+            "en": "In Phishing Builder: choose 'Microsoft 365' template, use a domain like 'microsoft-login-alert.com', title 'Account Security Alert'. Make the URL look official. Copy the phishing URL to use in step 2.",
+            "ru": "В Phishing Builder: выбери шаблон 'Microsoft 365', домен например 'microsoft-login-alert.com', заголовок 'Account Security Alert'. Скопируй фишинг-URL для шага 2."
+          }
+        }
+      ]
+    },
+    {
+      "phase": 2,
+      "name": {
+        "en": "Craft the Phishing Email",
+        "ru": "Составьте фишинговое письмо"
+      },
+      "description": {
+        "en": "Switch to the Campaign tab and craft your phishing email. The From address should look like an internal IT or Microsoft security team. Subject and body should create urgency — account lockout, suspicious activity, password expiry. Keywords like 'urgent', 'locked', '1 hour' significantly increase click rates.",
+        "ru": "Перейдите на вкладку Campaign и составьте фишинговое письмо. Адрес отправителя должен выглядеть как внутренняя IT-команда или команда безопасности Microsoft. Тема и тело должны создавать срочность — блокировка аккаунта, подозрительная активность, истечение пароля. Ключевые слова 'urgent', 'locked', '1 hour' значительно повышают кликабельность."
+      },
+      "objectives": [
+        {
+          "en": "Write a convincing From address that spoofs IT or Microsoft security",
+          "ru": "Напишите убедительный адрес отправителя, имитирующий IT или безопасность Microsoft"
+        },
+        {
+          "en": "Include urgency triggers in subject and body (account lockout, 1-hour deadline)",
+          "ru": "Добавьте триггеры срочности в тему и тело (блокировка аккаунта, дедлайн 1 час)"
+        }
+      ],
+      "hints": [
+        {
+          "cost": 50,
+          "text": {
+            "en": "Mass phishing works on volume and urgency. Your email needs to look like it came from IT or Microsoft — and must create immediate panic.",
+            "ru": "Массовый фишинг работает на объём и срочность. Письмо должно выглядеть от IT или Microsoft — и создавать немедленную панику."
+          }
+        },
+        {
+          "cost": 100,
+          "text": {
+            "en": "In the Email Client (port 9004): spoof sender as 'IT Security <security@microsoft-corp.com>'. Subject: 'URGENT: Your account will be suspended in 24 hours'. Body: warn about suspicious login, link to your phishing site. High urgency beats good grammar.",
+            "ru": "В Email Client (порт 9004): споофинг отправителя 'IT Security <security@microsoft-corp.com>'. Тема: 'СРОЧНО: Ваш аккаунт будет заблокирован через 24 часа'. Тело: предупреди о подозрительном входе, ссылка на фишинг-сайт."
+          }
+        }
+      ]
+    },
+    {
+      "phase": 3,
+      "name": {
+        "en": "Launch and Harvest",
+        "ru": "Запустите и собирайте"
+      },
+      "description": {
+        "en": "Hit Launch Mass Campaign to blast all NPCs. Results appear immediately — some will click, some won't. Security-aware NPCs will never fall for it. Harvested credentials appear in the Phishing Dashboard (port 9006). You need at least 5 captures, then take them to the DarkHub marketplace (port 9005) to claim the flag.",
+        "ru": "Нажмите Launch Mass Campaign, чтобы разослать письма всем НПС. Результаты появятся сразу — одни кликнут, другие нет. Захваченные учётные данные отображаются в Phishing Dashboard (порт 9006). Нужно минимум 5 записей, затем идите в DarkHub (порт 9005) и выставьте их на продажу для получения флага."
+      },
+      "objectives": [
+        {
+          "en": "Launch the campaign and collect credentials from at least 5 NPCs",
+          "ru": "Запустите кампанию и соберите учётные данные от минимум 5 НПС"
+        },
+        {
+          "en": "Open DarkHub marketplace (port 9005) and submit 5 valid credentials",
+          "ru": "Откройте DarkHub (порт 9005) и выставьте 5 валидных учётных записей"
+        },
+        {
+          "en": "Receive the flag after the listing is confirmed",
+          "ru": "Получите флаг после подтверждения листинга"
+        }
+      ],
+      "hints": [
+        {
+          "cost": 50,
+          "text": {
+            "en": "Send your crafted email to ALL available targets. Not everyone will click — you need volume. Check the Phishing Dashboard (port 9006) to see captured credentials. Then head to DarkHub (port 9005).",
+            "ru": "Отправь письмо ВСЕМ доступным целям. Не все кликнут — нужен объём. Проверь Phishing Dashboard (порт 9006) — там захваченные креды. Затем иди в DarkHub (порт 9005)."
+          }
+        },
+        {
+          "cost": 100,
+          "text": {
+            "en": "You need 5 valid credentials. Run multiple campaigns with different sender addresses to hit more targets. Copy the harvested email:password pairs into DarkHub, then submit the listing to get the flag.",
+            "ru": "Нужно 5 валидных кредов. Запускай несколько кампаний с разными адресами отправителя для охвата большего числа НПС. Скопируй захваченные email:password в DarkHub и выставь листинг для получения флага."
+          }
+        }
+      ],
+      "flag": {
+        "id": "flag_mass_phish",
+        "value": "SF{m4ss_ph1sh_h4rv3st}",
+        "hint": {
+          "en": "Improve page quality + add urgency keywords to the email body. Try different sender domains — ones that include 'microsoft', 'secure', or 'portal' score higher. Security leads will never fall for it regardless.",
+          "ru": "Улучшите качество страницы + добавьте ключевые слова срочности в тело письма. Попробуйте разные домены отправителя — те, что содержат 'microsoft', 'secure' или 'portal', дают более высокий балл. Руководители безопасности не попадутся никогда."
+        },
+        "points": 150
+      }
+    }
+  ],
+  "personas": {}
+}
