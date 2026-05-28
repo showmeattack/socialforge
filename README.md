@@ -215,7 +215,7 @@ socialforge/
 │   └── store.jsx        # Global state
 ├── labs/                # Lab definitions (personas, flags, attack chains)
 │   └── *.json
-└── targets/             # Simulated services (Flask)
+└── targets/             # Simulated services (Python/uvicorn)
     ├── email_client/    # Port 9004
     ├── phone/           # Port 9007 (phone + SMS)
     ├── social/          # Port 9003

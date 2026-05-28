@@ -37,6 +37,9 @@ Thumbs.db
 *.txt
 logs/
 
+# Test artifacts
+tests/screenshots/
+
 # Internal dev files
 CLAUDE.md
 progress.md

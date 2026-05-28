@@ -2968,15 +2968,14 @@ async def phish_trigger(
 @app.post("/api/portal/login")
 async def portal_login(
     lab_id: str = Query(...),
-    user_id: int = Query(127),
+    user_id: int = Query(...),
     session: AsyncSession = Depends(get_session),
     body: dict = Body(...),
 ):
-    import traceback as _tb
     try:
         return await _portal_login_impl(lab_id, user_id, session, body)
-    except Exception as _e:
-        return {"success": False, "error": "server_error", "_debug": str(_e), "_tb": _tb.format_exc()[-500:]}
+    except Exception:
+        return {"success": False, "error": "server_error"}
 
 async def _portal_login_impl(lab_id, user_id, session, body):
     email = body.get("email", "")
