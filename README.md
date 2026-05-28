@@ -61,13 +61,16 @@ NPCs respond dynamically using LLMs and are designed to:
 **Lab detail — attack chain and NPCs**
 ![Lab Detail](docs/screenshots/03-lab-detail.png)
 
-**Phone simulator — caller ID spoofing active**
+**Phone simulator — dial pad (ext. 1000)**
+![Phone Dialer](docs/screenshots/04a-phone-dialer.png)
+
+**Caller ID spoofing — impersonate any extension or name**
 ![Phone Spoof](docs/screenshots/04b-phone-spoof.png)
 
-**Voice synthesis module**
+**Voice synthesis — load a .sfvoice identity profile**
 ![Phone Voice](docs/screenshots/04c-phone-voice.png)
 
-**Live vishing call — NPC dialogue with Alicia Reeves (Head of Operations)**
+**Live vishing call — Alicia Reeves reveals Rachel's direct line after pretexting**
 ![Phone Chat](docs/screenshots/04-phone-chat.png)
 
 **Email client — spoofed email sending**
