@@ -53,6 +53,31 @@ NPCs respond dynamically using LLMs and are designed to:
 
 ---
 
+## Screenshots
+
+**Labs overview**
+![Labs](docs/screenshots/02-labs.png)
+
+**Lab detail — attack chain and NPCs**
+![Lab Detail](docs/screenshots/03-lab-detail.png)
+
+**Phone simulator — vishing interface**
+![Phone](docs/screenshots/04-phone-chat.png)
+
+**Email client — spoofed email sending**
+![Email](docs/screenshots/05-email-client.png)
+
+**LinkHub — fake social network**
+![LinkHub](docs/screenshots/06-linkhub.png)
+
+**Phishing site builder**
+![Phisher](docs/screenshots/07-phisher.png)
+
+**Company OSINT directory**
+![OSINT](docs/screenshots/08-company-osint.png)
+
+---
+
 ## Communication Channels
 
 | Channel | Simulated service | Techniques practiced |
