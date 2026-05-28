@@ -68,16 +68,15 @@ NPCs respond dynamically using LLMs and are designed to:
 
 ## Labs
 
-| Lab | Core Technique | Channels | Difficulty | Points |
-|-----|---------------|----------|:----------:|:------:|
-| Phishing 101 | Basic email phishing | Email | Easy | 100 |
-| Authority Override | Authority & urgency exploitation | Email | Easy | 100 |
-| Quid Pro Quo | Reciprocity manipulation | Phone | Easy | 100 |
-| Smishing Attack | SMS phishing | SMS | Easy | 100 |
-| Spray & Pray | Mass phishing campaign | Email + Web | Medium | 150 |
-| Human Chain | Multi-hop social engineering | Multi-channel | Medium | 200 |
-| MGM Breach | Inspired by a real incident | Multi-channel | Medium | 250 |
-| Chain of Trust | Vishing + credential theft chain | Phone + DM | Hard | 300 |
+| Lab | Core Technique | Channels | Difficulty |
+|-----|---------------|----------|:----------:|
+| Authority Override | Authority & urgency exploitation | Email | Easy |
+| Quid Pro Quo | Reciprocity manipulation | Phone | Easy |
+| Smishing Attack | SMS phishing | SMS | Easy |
+| Spray & Pray | Mass phishing campaign | Email + Web | Medium |
+| Human Chain | Multi-hop social engineering | Multi-channel | Medium |
+| MGM Breach | Inspired by a real incident | Multi-channel | Medium |
+| Chain of Trust | Vishing + credential theft chain | Phone + DM | Hard |
 
 All labs use CTF-style flags: `SF{flag_value}` — validated automatically in the UI.
 
@@ -89,7 +88,7 @@ All labs use CTF-style flags: `SF{flag_value}` — validated automatically in th
 - **7 isolated target services** — each communication channel runs as a separate simulated service
 - **Attack detection system** — NPCs detect threats, abuse, and social engineering red flags
 - **Realistic multi-step scenarios** — attack chains that mirror real-world SE campaigns
-- **CTF scoring** — flag-based completion with point tracking and scoreboard
+- **Flag-based completion** — each lab has a hidden flag, validated automatically in the UI
 - **Session management** — progress tracking, daily resets, lab history
 - **Fully local** — no data leaves your machine
 
