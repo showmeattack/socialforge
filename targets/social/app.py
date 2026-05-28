@@ -24,7 +24,7 @@ class AllowIframeMiddleware(BaseHTTPMiddleware):
 app.add_middleware(AllowIframeMiddleware)
 
 LABS_DIR = Path(__file__).parent.parent.parent / "labs"
-NPC_PHOTOS_DIR = Path(r"C:\Users\fargo\Desktop\НПС")
+NPC_PHOTOS_DIR = Path(__file__).parent / "photos"
 
 NPC_PHOTO_URLS = {
     # human_chain
@@ -53,12 +53,10 @@ async def serve_photo(filename: str):
     name = urllib.parse.unquote(filename)
     stem = Path(name).stem if "." in name else name
     # Local files take priority over Unsplash fallbacks
-    path = NPC_PHOTOS_DIR / name
-    if path.exists():
-        return FileResponse(str(path), media_type="image/png")
-    path2 = NPC_PHOTOS_DIR / f"{stem}.png"
-    if path2.exists():
-        return FileResponse(str(path2), media_type="image/png")
+    for ext, mime in [(".jpg", "image/jpeg"), (".png", "image/png")]:
+        p = NPC_PHOTOS_DIR / f"{stem}{ext}"
+        if p.exists():
+            return FileResponse(str(p), media_type=mime)
     if stem in NPC_PHOTO_URLS:
         return RedirectResponse(url=NPC_PHOTO_URLS[stem], status_code=302)
     stem = Path(name).stem if "." in name else name
