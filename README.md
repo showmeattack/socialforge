@@ -58,11 +58,11 @@ NPCs respond dynamically using LLMs and are designed to:
 | Channel | Simulated service | Techniques practiced |
 |---|---|---|
 | 📧 Email | Spoofed email client (port 9004) | Phishing, pretexting, authority exploitation |
-| 📞 Phone / Vishing | IVR simulator (port 9005) | Cold calling, impersonation, urgency manipulation |
-| 💬 SMS / Smishing | SMS gateway (port 9005) | Text-based social engineering |
-| 🌐 Social Media DM | Social network (port 9003) | LinkedIn-style trust building |
-| 🔗 Phishing sites | LinkHub generator (port 9006) | Credential harvesting, fake login pages |
-| 🏢 Company OSINT | Company directory (port 9001) | Target reconnaissance |
+| 📞 Phone / Vishing / SMS | Phone simulator (port 9007) | Cold calling, vishing, smishing |
+| 🌐 Social Media DM | LinkHub social network (port 9003) | LinkedIn-style trust building |
+| 🔗 Phishing sites | Phishing builder (port 9006) | Credential harvesting, fake login pages |
+| 🏢 Company OSINT | Company directory (port 9008) | Target reconnaissance |
+| 🌑 Dark Hub | Data marketplace (port 9005) | Leaked data, target profiling |
 
 ---
 
@@ -107,8 +107,8 @@ All labs use CTF-style flags: `SF{flag_value}` — validated automatically in th
 - React Router 7
 - JetBrains Mono font, CSS variables design system
 
-**Target Simulators** (7 Flask services)
-- Email client, phone IVR, social network, company OSINT, phishing dashboard, dark web market, corporate site
+**Target Simulators** (7 Python services, uvicorn)
+- Email client (9004), phone+SMS IVR (9007), social network (9003), company directory (9008), phishing builder (9006), dark data hub (9005), corporate site (9001)
 
 **Testing**
 - Playwright (end-to-end)
@@ -143,7 +143,7 @@ Open **http://localhost:3000**
 The `npm run dev` command starts all services concurrently:
 - Frontend: `localhost:3000`
 - Backend API: `localhost:8000`
-- Target simulators: `localhost:9001–9007`
+- Target simulators: `localhost:9001, 9003–9008`
 
 ---
 
@@ -183,11 +183,12 @@ socialforge/
 │   └── *.json
 └── targets/             # Simulated services (Flask)
     ├── email_client/    # Port 9004
-    ├── phone/           # Port 9005
+    ├── phone/           # Port 9007 (phone + SMS)
     ├── social/          # Port 9003
     ├── phisher/         # Port 9006
-    ├── companies/       # Port 9001
-    └── ...
+    ├── companies/       # Port 9008
+    ├── darknet/         # Port 9005
+    └── megacorp/        # Port 9001 (target company site)
 ```
 
 ---
